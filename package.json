@@ -2,7 +2,7 @@
   "type": "module",
   "main": "src/index.js",
   "name": "humanize-numbers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Make large numbers human readable",
   "keywords": [
     "readable",
