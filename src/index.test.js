@@ -1,5 +1,5 @@
 import { describe, it, expect, test } from 'vitest'
-import { setGlobalLocale, humanizeNumberXS, humanizeNumberSM, humanizeNumberMD, humanizeNumber, countUnits, fullyReadableNumber, textToNumbers, avoidExponentialNotation, dashNumbers, round, floor, ceil, beutifulRound, beutifulFloor, beutifulCeil } from './index.js'
+import { setGlobalLocale, humanizeNumberXS, humanizeNumberSM, humanizeNumberMD, humanizeNumber, countUnits, fullyReadableNumber, textToNumbers, avoidExponentialNotation, dashNumbers, round, floor, ceil, beutifulRound, beutifulFloor, beutifulCeil, humanizeAbbr, humanizeAlphabet, alphabet, humanizeWithFormat } from './index.js'
 
 describe('humanizeNumber', () => {
     it('en variants', () => {
@@ -16,6 +16,7 @@ describe('humanizeNumber', () => {
         expect(humanizeNumber(1.222e15)).toBe('1.22 quadrillion')
         expect(humanizeNumber(1.222e18 + 2)).toBe('1.22 quintillion')
         expect(humanizeNumber(1.222e21 + 2)).toBe('1.22 sextillion')
+        expect(humanizeNumber(1e303)).toBe('1 centillion')
 
         /*
         * small size
@@ -26,14 +27,15 @@ describe('humanizeNumber', () => {
         expect(humanizeNumberSM(11111111)).toBe('11.11M')
         expect(humanizeNumberSM(1234567890)).toBe('1.23B')
         expect(humanizeNumberSM(1234567890123)).toBe('1.23T')
-        expect(humanizeNumberSM(1.222e15)).toBe('1.22 QUAD')
-        expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22 QUIN')
-        expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22 SEX')
+        expect(humanizeNumberSM(1.222e15)).toBe('1.22 Qa')
+        expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22 Qi')
+        expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22 Sx')
+        expect(humanizeNumberSM(1e303)).toBe('1 centillion')
 
         /*
         * extra small size
         */
-        expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 SEX')
+        expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx')
     })
 
     it('ru variants', () => {
@@ -43,6 +45,7 @@ describe('humanizeNumber', () => {
         /*
         * standart size
         */
+        expect(humanizeNumber(100)).toBe('100')
         expect(humanizeNumber(1000)).toBe('1 тысяча')
         expect(humanizeNumber(10000)).toBe('10 тысяч')
         expect(humanizeNumber(1000000)).toBe('1 миллион')
@@ -53,6 +56,7 @@ describe('humanizeNumber', () => {
         expect(humanizeNumber(1.222e15)).toBe('1.22 квадриллиона')
         expect(humanizeNumber(1.222e18 + 2)).toBe('1.22 квинтиллиона')
         expect(humanizeNumber(1.222e21 + 2)).toBe('1.22 секстиллиона')
+        expect(humanizeNumber(1e303)).toBe('1 центиллион')
 
         /*
         * small size
@@ -64,9 +68,10 @@ describe('humanizeNumber', () => {
         expect(humanizeNumberSM(11000000)).toBe('11 млн')
         expect(humanizeNumberSM(1234567890)).toBe('1.23 млрд')
         expect(humanizeNumberSM(1234567890123)).toBe('1.23 трлн')
-        expect(humanizeNumberSM(1.222e15)).toBe('1.22 QUAD')
-        expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22 QUIN')
-        expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22 SEX')
+        expect(humanizeNumberSM(1.222e15)).toBe('1.22 Qa')
+        expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22 Qi')
+        expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22 Sx')
+        expect(humanizeNumberSM(1e303)).toBe('1 центиллион')
 
         /*
         * extra small size
@@ -77,9 +82,10 @@ describe('humanizeNumber', () => {
         expect(humanizeNumberXS(11000000)).toBe('11M')
         expect(humanizeNumberXS(1234567890)).toBe('1.2B')
         expect(humanizeNumberXS(1234567890123)).toBe('1.2T')
-        expect(humanizeNumberXS(1.222e15)).toBe('1.2 QUAD')
-        expect(humanizeNumberXS(1.222e18 + 2)).toBe('1.2 QUIN')
-        expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 SEX')
+        expect(humanizeNumberXS(1.222e15)).toBe('1.2 Qa')
+        expect(humanizeNumberXS(1.222e18 + 2)).toBe('1.2 Qi')
+        expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx')
+        expect(humanizeNumberXS(1e303)).toBe('1 центиллион')
     })
 
     it('with options', () => {
@@ -99,6 +105,52 @@ describe('humanizeNumber', () => {
         /* using certain size: */
         expect(humanizeNumber(1e9, 'sm', { locale: 'ru' })).toBe('1 млрд')
         expect(humanizeNumber(1e9, 'md', { locale: 'en' })).toBe('1 billion')
+    })
+})
+
+describe('humanizeAbbr', () => {
+    test('default format', () => {
+        expect(humanizeAbbr(1e3)).toBe('1K')
+        expect(humanizeAbbr(1e6)).toBe('1M')
+        expect(humanizeAbbr(1e9)).toBe('1B')
+        expect(humanizeAbbr(1e12)).toBe('1T')
+        expect(humanizeAbbr(1e15)).toBe('1TK')
+        expect(humanizeAbbr(1e18)).toBe('1TM')
+        expect(humanizeAbbr(1e21)).toBe('1TB')
+        expect(humanizeAbbr(1e24)).toBe('1TT')
+        expect(humanizeAbbr(1e27)).toBe('1TTK')
+        expect(humanizeAbbr(1e30)).toBe('1TTM')
+        expect(humanizeAbbr(1e33)).toBe('1TTB')
+        expect(humanizeAbbr(1e36)).toBe('1TTT')
+        expect(humanizeAbbr(1e39)).toBe('1TTTK')
+        expect(humanizeAbbr(1e42)).toBe('1TTTM')
+        expect(humanizeAbbr(1e45)).toBe('1TTTB')
+        expect(humanizeAbbr(1e48)).toBe('1TTTT')
+        expect(humanizeAbbr(1e303)).toBe('1TTTTTTTTTTTTTTTTTTTTTTTTTK')
+    })
+
+    test('alphabet format', () => {
+        for(let i = 0; i < alphabet.length; i++) {
+            let letter = alphabet[i];
+            expect(humanizeAlphabet(Math.pow(1000, (i + 1)))).toBe('1' + letter);
+        }
+    })
+
+    test('alphabet * 2 format', () => {
+        for(let i = alphabet.length; i < alphabet.length * 2; i++) {
+            let letter = alphabet[i % alphabet.length];
+            expect(humanizeAlphabet(Math.pow(1000, (i + 1)))).toBe('1z' + letter);
+        }
+
+        expect(humanizeAlphabet(1e303)).toBe('1zzzw')
+    })
+
+    test('custom format', () => {
+        let rusAlphabet = 'а,б,в,г,д,е,ё,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я'.split(',');
+        expect(humanizeWithFormat(1e3, { format: rusAlphabet })).toBe('1а')
+        expect(humanizeWithFormat(1e6, { format: rusAlphabet })).toBe('1б')
+        expect(humanizeWithFormat(1e9, { format: rusAlphabet })).toBe('1в')
+        expect(humanizeWithFormat(1e303, { format: rusAlphabet })).toBe('1яяяб')
     })
 })
 

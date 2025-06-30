@@ -154,9 +154,9 @@ export function fullyReadableNumber(num, separator = ' ') {
 * 1111111         = 1.1M
 * 1234567890      = 1.2B
 * 1234567890123   = 1.2T
-* 1.222e15        = 1.2 QUAD
-* 1.222e18 + 2    = 1.2 QUIN
-* 1.222e21 + 2    = 1.2 SEX
+* 1.222e15        = 1.2 Qa
+* 1.222e18 + 2    = 1.2 Qi
+* 1.222e21 + 2    = 1.2 Sx
 *
 */
 export function humanizeNumberXS(num, options) {
@@ -173,9 +173,9 @@ export function humanizeNumberXS(num, options) {
 * 1111111         = 1.11 млн
 * 1234567890      = 1.23 млрд
 * 1234567890123   = 1.23 трлн
-* 1.222e15        = 1.22 QUAD
-* 1.222e18 + 2    = 1.22 QUIN
-* 1.222e21 + 2    = 1.22 SEX
+* 1.222e15        = 1.22 Qa
+* 1.222e18 + 2    = 1.22 Qi
+* 1.222e21 + 2    = 1.22 Sx
 *
 */
 export function humanizeNumberSM(num, options) {
@@ -268,6 +268,55 @@ export function humanizeNumber(num, size = 'md', options = {}) {
 	readable += separator + dividedUnitLabel;
 
 	return readable;
+}
+
+/*
+*
+* humanize with custom format
+*
+*/
+export function humanizeWithFormat(num, {
+	format = ['K', 'M', 'B', 'T'],
+	divider = 1e3,
+	fractionCount = 0,
+	separator = '',
+	formatSeparator = '',
+	roundFunctionName = 'round'
+} = {}) {
+	let readable = '';
+	let dividedNum = num;
+
+	for(let index = format.length - 1; index >= 0; index--) {
+		const formatLabel = format[index];
+		const divideTo = divider ** (index + 1);
+		let divided = round(dividedNum / divideTo);
+		while(divided >= 1) {
+			readable += formatSeparator + formatLabel;
+			dividedNum = round(dividedNum / divideTo);
+			divided = round(dividedNum / divideTo);
+		}
+	}
+	
+	readable = round(dividedNum, fractionCount, roundFunctionName) + separator + readable;
+	
+	return readable;
+}
+export function humanizeAbbr(num) {
+	return humanizeWithFormat(num);
+}
+
+export const alphabetString = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
+export const alphabet = alphabetString.split(',');
+export function humanizeAlphabet(num, upper = false) {
+	let options = {};
+	let replaceAlphabet;
+	if(upper) {
+		replaceAlphabet = alphabetString.toUpperCase().split(',');
+	}
+
+	options.format = replaceAlphabet ?? alphabet;
+
+	return humanizeWithFormat(num, options);
 }
 
 /*

@@ -51,10 +51,10 @@ export const ranks = [
 	{
 		unit: 1e15,
 		unitName: 'quadrillion',
-		abbr: 'QUAD',
+		abbr: 'Qa',
         locales: {
             'ru': {
-                abbreviation: 'QUAD',
+                abbreviation: 'Qa',
                 unitName: 'квадриллион',
             }
         }
@@ -62,10 +62,10 @@ export const ranks = [
 	{
 		unit: 1e18,
 		unitName: 'quintillion',
-		abbr: 'QUIN',
+		abbr: 'Qi',
         locales: {
             'ru': {
-                abbreviation: 'QUIN',
+                abbreviation: 'Qi',
                 unitName: 'квинтиллион',
             }
         }
@@ -73,10 +73,10 @@ export const ranks = [
 	{
 		unit: 1e21,
 		unitName: 'sextillion',
-		abbr: 'SEX',
+		abbr: 'Sx',
         locales: {
             'ru': {
-                abbreviation: 'SEX',
+                abbreviation: 'Sx',
                 unitName: 'секстиллион',
             }
         }
@@ -84,10 +84,10 @@ export const ranks = [
 	{
 		unit: 1e24,
 		unitName: 'septillion',
-		abbr: 'SEP',
+		abbr: 'Sp',
         locales: {
             'ru': {
-                abbreviation: 'SEP',
+                abbreviation: 'Sp',
                 unitName: 'септиллион',
             }
         }
@@ -95,10 +95,10 @@ export const ranks = [
 	{
 		unit: 1e27,
 		unitName: 'octillion',
-		abbr: 'OCT',
+		abbr: 'Oc',
         locales: {
             'ru': {
-                abbreviation: 'OCT',
+                abbreviation: 'Oc',
                 unitName: 'октиллион',
             }
         }
@@ -106,10 +106,10 @@ export const ranks = [
 	{
 		unit: 1e30,
 		unitName: 'nonillion',
-		abbr: 'NON',
+		abbr: 'No',
         locales: {
             'ru': {
-                abbreviation: 'NON',
+                abbreviation: 'No',
                 unitName: 'нониллион',
             }
         }
@@ -117,10 +117,10 @@ export const ranks = [
 	{
 		unit: 1e33,
 		unitName: 'decillion',
-		abbr: 'DEC',
+		abbr: 'Dc',
         locales: {
             'ru': {
-                abbreviation: 'DEC',
+                abbreviation: 'Dc',
                 unitName: 'дециллион',
             }
         }
@@ -128,10 +128,10 @@ export const ranks = [
 	{
 		unit: 1e36,
 		unitName: 'undecillion',
-		abbr: 'UND',
+		abbr: 'Und',
         locales: {
             'ru': {
-                abbreviation: 'UND',
+                abbreviation: 'Und',
                 unitName: 'ундециллион',
             }
         }
@@ -139,10 +139,10 @@ export const ranks = [
 	{
 		unit: 1e39,
 		unitName: 'duodecillion',
-		abbr: 'DUO',
+		abbr: 'Dud',
         locales: {
             'ru': {
-                abbreviation: 'DUO',
+                abbreviation: 'Dud',
                 unitName: 'дуодециллион',
             }
         }
@@ -150,10 +150,10 @@ export const ranks = [
 	{
 		unit: 1e42,
 		unitName: 'tredecillion',
-		abbr: 'TRE',
+		abbr: 'Trd',
         locales: {
             'ru': {
-                abbreviation: 'TRE',
+                abbreviation: 'Trd',
                 unitName: 'тредециллион',
             }
         }
@@ -161,10 +161,10 @@ export const ranks = [
 	{
 		unit: 1e45,
 		unitName: 'quattuordecillion',
-		abbr: 'QUAT',
+		abbr: 'Qud',
         locales: {
             'ru': {
-                abbreviation: 'QUAT',
+                abbreviation: 'Qud',
                 unitName: 'кватуордециллион',
             }
         }
@@ -172,10 +172,10 @@ export const ranks = [
 	{
 		unit: 1e48,
 		unitName: 'quindecillion',
-		abbr: 'QUIN',
+		abbr: 'Qid',
         locales: {
             'ru': {
-                abbreviation: 'QUIN',
+                abbreviation: 'Qid',
                 unitName: 'квиндециллион',
             }
         }
@@ -183,10 +183,10 @@ export const ranks = [
 	{
 		unit: 1e51,
 		unitName: 'sexdecillion',
-		abbr: 'SEXD',
+		abbr: 'Sed',
         locales: {
             'ru': {
-                abbreviation: 'SEXD',
+                abbreviation: 'Sed',
                 unitName: 'сексдециллион',
             }
         }
@@ -194,10 +194,10 @@ export const ranks = [
 	{
 		unit: 1e54,
 		unitName: 'septendecillion',
-		abbr: 'SEPT',
+		abbr: 'Spd',
         locales: {
             'ru': {
-                abbreviation: 'SEPT',
+                abbreviation: 'Spd',
                 unitName: 'септендециллион',
             }
         }
@@ -205,10 +205,10 @@ export const ranks = [
 	{
 		unit: 1e57,
 		unitName: 'octodecillion',
-		abbr: 'OCTO',
+		abbr: 'Ocd',
         locales: {
             'ru': {
-                abbreviation: 'OCTO',
+                abbreviation: 'Ocd',
                 unitName: 'октодециллион',
             }
         }
@@ -216,10 +216,10 @@ export const ranks = [
 	{
 		unit: 1e60,
 		unitName: 'novemdecillion',
-		abbr: 'NOVE',
+		abbr: 'Nod',
         locales: {
             'ru': {
-                abbreviation: 'NOVE',
+                abbreviation: 'Nod',
                 unitName: 'новемдециллион',
             }
         }
@@ -227,10 +227,10 @@ export const ranks = [
 	{
 		unit: 1e63,
 		unitName: 'vigintillion',
-		abbr: 'VIGI',
+		abbr: 'Vig',
         locales: {
             'ru': {
-                abbreviation: 'VIGI',
+                abbreviation: 'Vig',
                 unitName: 'вигинтиллион',
             }
         }
@@ -238,10 +238,8 @@ export const ranks = [
 	{
 		unit: 1e66,
 		unitName: 'unvigintillion',
-		abbr: 'UNVI',
         locales: {
             'ru': {
-                abbreviation: 'UNVI',
                 unitName: 'унвигинтиллион',
             }
         }
@@ -249,10 +247,8 @@ export const ranks = [
 	{
 		unit: 1e69,
 		unitName: 'duovigintillion',
-		abbr: 'DUOV',
         locales: {
             'ru': {
-                abbreviation: 'DUOV',
                 unitName: 'дуовигинтиллион',
             }
         }
@@ -260,10 +256,8 @@ export const ranks = [
 	{
 		unit: 1e72,
 		unitName: 'trevigintillion',
-		abbr: 'TREV',
         locales: {
             'ru': {
-                abbreviation: 'TREV',
                 unitName: 'тревигинтиллион',
             }
         }
