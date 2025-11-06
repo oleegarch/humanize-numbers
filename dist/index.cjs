@@ -1,3 +1,35 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.alphabetString = exports.alphabet = void 0;
+exports.avoidExponentialNotation = avoidExponentialNotation;
+exports.beutifulCeil = beutifulCeil;
+exports.beutifulFloor = beutifulFloor;
+exports.beutifulRound = beutifulRound;
+exports.ceil = ceil;
+exports.clamp = clamp;
+exports.countUnits = countUnits;
+exports.dashNumbers = dashNumbers;
+exports.floor = floor;
+exports.fract = fract;
+exports.fullyReadableNumber = fullyReadableNumber;
+exports.humanizeAbbr = humanizeAbbr;
+exports.humanizeAlphabet = humanizeAlphabet;
+exports.humanizeNumber = humanizeNumber;
+exports.humanizeNumberMD = humanizeNumberMD;
+exports.humanizeNumberSM = humanizeNumberSM;
+exports.humanizeNumberXS = humanizeNumberXS;
+exports.humanizeWithFormat = humanizeWithFormat;
+exports.isTextMeansThisRank = isTextMeansThisRank;
+exports.lerp = lerp;
+exports.round = round;
+exports.setGlobalLocale = setGlobalLocale;
+exports.textToNumbers = textToNumbers;
+var makePlural = _interopRequireWildcard(require("make-plural"));
+var _ranks = require("./ranks.js");
+function _interopRequireWildcard(e, t) { if ("function" == typeof WeakMap) var r = new WeakMap(), n = new WeakMap(); return (_interopRequireWildcard = function _interopRequireWildcard(e, t) { if (!t && e && e.__esModule) return e; var o, i, f = { __proto__: null, "default": e }; if (null === e || "object" != _typeof(e) && "function" != typeof e) return f; if (o = t ? n : r) { if (o.has(e)) return o.get(e); o.set(e, f); } for (var _t in e) "default" !== _t && {}.hasOwnProperty.call(e, _t) && ((i = (o = Object.defineProperty) && Object.getOwnPropertyDescriptor(e, _t)) && (i.get || i.set) ? o(f, _t, i) : f[_t] = e[_t]); return f; })(e, t); }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -6,19 +38,17 @@ function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) 
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
-import * as makePlural from 'make-plural';
-import { ranks, getRankProperty } from './ranks.js';
 var locale = 'en';
-export function setGlobalLocale(newLocale) {
+function setGlobalLocale(newLocale) {
   locale = newLocale;
 }
 
 /* lerp */
-export function lerp(start, end, amt) {
+function lerp(start, end, amt) {
   return (1 - amt) * start + amt * end;
 }
 /* clamp */
-export function clamp(min, max, num) {
+function clamp(min, max, num) {
   if (arguments.length === 1) {
     num = min;
     min = 0;
@@ -27,14 +57,14 @@ export function clamp(min, max, num) {
   return Math.max(min, Math.min(max, num));
 }
 /* return fraction part of number */
-export function fract(num) {
+function fract(num) {
   return num % 1;
 }
 
 /* units counter */
 // 1000 = 3
 // 1000000 = 6
-export function countUnits(num) {
+function countUnits(num) {
   return Math.max(String(Math.floor(Math.abs(num))).length - 1, 0);
 }
 
@@ -50,7 +80,7 @@ export function countUnits(num) {
 * fraction = -2: 111100
 *
 */
-export function round(num) {
+function round(num) {
   var fractionCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var functionName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'round';
   if (num === 0) {
@@ -70,10 +100,10 @@ export function round(num) {
     return func(num / unit) * unit;
   }
 }
-export function floor(num, fractionCount) {
+function floor(num, fractionCount) {
   return round(num, fractionCount, 'floor');
 }
-export function ceil(num, fractionCount) {
+function ceil(num, fractionCount) {
   return round(num, fractionCount, 'ceil');
 }
 
@@ -87,18 +117,18 @@ export function ceil(num, fractionCount) {
 * rfraction =  2: 1110000
 * 
 */
-export function beutifulRound(num) {
+function beutifulRound(num) {
   var reverseFractionCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   var functionName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'round';
   var count = countUnits(num);
   var fractionCount = -(count - reverseFractionCount);
   return round(num, fractionCount, functionName);
 }
-export function beutifulFloor(num) {
+function beutifulFloor(num) {
   var reverseFractionCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   return beutifulRound(num, reverseFractionCount, 'floor');
 }
-export function beutifulCeil(num) {
+function beutifulCeil(num) {
   var reverseFractionCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
   return beutifulRound(num, reverseFractionCount, 'ceil');
 }
@@ -110,7 +140,7 @@ export function beutifulCeil(num) {
 * thank https://stackoverflow.com/questions/1685680/how-to-avoid-scientific-notation-for-large-numbers-in-javascript
 *
 */
-export function avoidExponentialNotation(x) {
+function avoidExponentialNotation(x) {
   var sign = '';
   if (Math.sign(x) === -1) {
     sign = '-';
@@ -138,7 +168,7 @@ export function avoidExponentialNotation(x) {
 * 1e15    = 1 000 000 000 000 000
 *
 */
-export function fullyReadableNumber(num) {
+function fullyReadableNumber(num) {
   var separator = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : ' ';
   if (typeof num === 'number') num = avoidExponentialNotation(num);
   var _String$split = String(num).split('.'),
@@ -164,7 +194,7 @@ export function fullyReadableNumber(num) {
 * 1.222e21 + 2    = 1.2 Sx
 *
 */
-export function humanizeNumberXS(num, options) {
+function humanizeNumberXS(num, options) {
   return humanizeNumber(num, 'xs', options);
 }
 
@@ -183,7 +213,7 @@ export function humanizeNumberXS(num, options) {
 * 1.222e21 + 2    = 1.22 Sx
 *
 */
-export function humanizeNumberSM(num, options) {
+function humanizeNumberSM(num, options) {
   return humanizeNumber(num, 'sm', options);
 }
 
@@ -202,10 +232,10 @@ export function humanizeNumberSM(num, options) {
 * 1.222e21 + 2    = 1.22 секстиллион
 *
 */
-export function humanizeNumberMD(num, options) {
+function humanizeNumberMD(num, options) {
   return humanizeNumber(num, 'md', options);
 }
-export function humanizeNumber(num) {
+function humanizeNumber(num) {
   var _options$locale, _options$separator;
   var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'md';
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
@@ -217,11 +247,11 @@ export function humanizeNumber(num) {
   }
   var currentLocale = (_options$locale = options.locale) !== null && _options$locale !== void 0 ? _options$locale : locale;
   var absNum = Math.abs(num);
-  var rank = options.withUnit ? ranks.find(function (r) {
+  var rank = options.withUnit ? _ranks.ranks.find(function (r) {
     return r.unit === options.withUnit;
   }) : null;
   if (!rank) {
-    var _iterator = _createForOfIteratorHelper(ranks),
+    var _iterator = _createForOfIteratorHelper(_ranks.ranks),
       _step;
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -243,9 +273,9 @@ export function humanizeNumber(num) {
   }
   var readable = '';
   var units = num / rank.unit;
-  var unitNameValue = getRankProperty(rank, currentLocale, 'unitName');
-  var abbreviationValue = getRankProperty(rank, currentLocale, 'abbreviation');
-  var abbrValue = getRankProperty(rank, currentLocale, 'abbr');
+  var unitNameValue = (0, _ranks.getRankProperty)(rank, currentLocale, 'unitName');
+  var abbreviationValue = (0, _ranks.getRankProperty)(rank, currentLocale, 'abbreviation');
+  var abbrValue = (0, _ranks.getRankProperty)(rank, currentLocale, 'abbr');
   var unitName = unitNameValue;
   if (_typeof(unitName) === 'object' && unitName != null) {
     unitName = unitName[makePlural[currentLocale](units)];
@@ -280,7 +310,7 @@ export function humanizeNumber(num) {
 * humanize with custom format
 *
 */
-export function humanizeWithFormat(num) {
+function humanizeWithFormat(num) {
   var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
     _ref2$format = _ref2.format,
     format = _ref2$format === void 0 ? ['K', 'M', 'B', 'T'] : _ref2$format,
@@ -309,12 +339,12 @@ export function humanizeWithFormat(num) {
   readable = round(dividedNum, fractionCount, roundFunctionName) + separator + readable;
   return readable;
 }
-export function humanizeAbbr(num) {
+function humanizeAbbr(num) {
   return humanizeWithFormat(num);
 }
-export var alphabetString = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
-export var alphabet = alphabetString.split(',');
-export function humanizeAlphabet(num) {
+var alphabetString = exports.alphabetString = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
+var alphabet = exports.alphabet = alphabetString.split(',');
+function humanizeAlphabet(num) {
   var upper = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
   var options = {};
   var replaceAlphabet;
@@ -344,7 +374,7 @@ var numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[а-яa-z]+)?/gi;
 var removeNonLettersSymbols = function removeNonLettersSymbols(t) {
   return t.replace(/[\.,:;\(\)]/g, '');
 };
-export function textToNumbers(text) {
+function textToNumbers(text) {
   var _options$locale2;
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var numbers = [];
@@ -352,7 +382,7 @@ export function textToNumbers(text) {
   text = text.replace(numbersRegexp, function (allMatch, match1, match2) {
     var unitLabel = (match2 !== null && match2 !== void 0 ? match2 : '').toLowerCase().trim();
     var num = parseFloat(match1);
-    var rank = ranks.find(function (rank) {
+    var rank = _ranks.ranks.find(function (rank) {
       return isTextMeansThisRank(unitLabel, rank, currentLocale);
     });
     if (rank) {
@@ -369,10 +399,10 @@ export function textToNumbers(text) {
     textWithoutNumbers: text
   };
 }
-export function isTextMeansThisRank(text, rank, locale) {
-  var unitName = getRankProperty(rank, locale, 'unitName');
-  var abbr = getRankProperty(rank, locale, 'abbr');
-  var abbreviation = getRankProperty(rank, locale, 'abbreviation');
+function isTextMeansThisRank(text, rank, locale) {
+  var unitName = (0, _ranks.getRankProperty)(rank, locale, 'unitName');
+  var abbr = (0, _ranks.getRankProperty)(rank, locale, 'abbr');
+  var abbreviation = (0, _ranks.getRankProperty)(rank, locale, 'abbreviation');
   var regexpStr = '';
   var prefixStr = '';
   if (unitName != null) {
@@ -412,7 +442,7 @@ function getUnitLabelAbbrCount(text, rank) {
 * dashNumbers([1, 2, 3, 4, 5, 8, 31, 23]) === '1-5, 8, 23, 31'
 *
 */
-export function dashNumbers(numbers) {
+function dashNumbers(numbers) {
   var dash = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '-';
   var separator = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : ', ';
   var sortFunc = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : function (a, b) {

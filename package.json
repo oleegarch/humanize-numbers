@@ -1,17 +1,51 @@
 {
+    "license": "MIT",
+    "author": "Oleg Mikhailov",
     "type": "module",
-    "main": "dist/index.js",
-    "module": "src/index.js",
+    "name": "humanize-numbers",
+    "version": "1.0.31",
+    "description": "Make large numbers human readable",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "scripts": {
+        "test": "vitest",
+        "build": "npm run build:esm && npm run build:cjs",
+        "build:esm": "babel src --out-dir dist --extensions \".js\" --env-name esm",
+        "build:cjs": "babel src --out-dir dist --extensions \".js\" --out-file-extension .cjs --env-name cjs"
+    },
     "exports": {
-        "import": "./src/index.js",
-        "require": "./dist/index.js"
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
     },
     "files": [
         "dist"
     ],
-    "name": "humanize-numbers",
-    "version": "1.0.22",
-    "description": "Make large numbers human readable",
+    "babel": {
+        "env": {
+            "esm": {
+                "presets": [
+                    [
+                        "@babel/preset-env",
+                        {
+                            "modules": false
+                        }
+                    ]
+                ]
+            },
+            "cjs": {
+                "presets": [
+                    [
+                        "@babel/preset-env",
+                        {
+                            "modules": "commonjs"
+                        }
+                    ]
+                ]
+            }
+        }
+    },
     "keywords": [
         "readable",
         "numbers",
@@ -25,12 +59,6 @@
     "repository": {
         "type": "git",
         "url": "git+https://github.com/oleegarch/humanize-numbers.git"
-    },
-    "license": "MIT",
-    "author": "Oleg Mikhailov",
-    "scripts": {
-        "test": "vitest",
-        "build": "babel src --out-dir dist"
     },
     "dependencies": {
         "make-plural": "^7.4.0"
