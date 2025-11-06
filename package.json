@@ -1,32 +1,39 @@
 {
-  "type": "module",
-  "main": "src/index.js",
-  "name": "humanize-numbers",
-  "version": "1.0.1",
-  "description": "Make large numbers human readable",
-  "keywords": [
-    "readable",
-    "numbers",
-    "digits",
-    "humanize"
-  ],
-  "homepage": "https://github.com/oleegarch/humanize-numbers#readme",
-  "bugs": {
-    "url": "https://github.com/oleegarch/humanize-numbers/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oleegarch/humanize-numbers.git"
-  },
-  "license": "MIT",
-  "author": "Oleg Mikhailov",
-  "scripts": {
-    "test": "vitest"
-  },
-  "dependencies": {
-    "make-plural": "^7.4.0"
-  },
-  "devDependencies": {
-    "vitest": "^3.2.4"
-  }
+    "type": "module",
+    "main": "dist/index.js",
+    "files": [
+        "dist"
+    ],
+    "name": "humanize-numbers",
+    "version": "1.0.1",
+    "description": "Make large numbers human readable",
+    "keywords": [
+        "readable",
+        "numbers",
+        "digits",
+        "humanize"
+    ],
+    "homepage": "https://github.com/oleegarch/humanize-numbers#readme",
+    "bugs": {
+        "url": "https://github.com/oleegarch/humanize-numbers/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/oleegarch/humanize-numbers.git"
+    },
+    "license": "MIT",
+    "author": "Oleg Mikhailov",
+    "scripts": {
+        "test": "vitest",
+        "build": "babel src --out-dir dist"
+    },
+    "dependencies": {
+        "make-plural": "^7.4.0"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.28.3",
+        "@babel/core": "^7.28.5",
+        "@babel/preset-env": "^7.28.5",
+        "vitest": "^3.2.4"
+    }
 }
