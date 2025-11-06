@@ -1,6 +1,11 @@
 {
     "type": "module",
     "main": "dist/index.js",
+    "module": "src/index.js",
+    "exports": {
+        "import": "./src/index.js",
+        "require": "./dist/index.js"
+    },
     "files": [
         "dist"
     ],
