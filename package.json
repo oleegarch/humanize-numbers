@@ -5,7 +5,7 @@
         "dist"
     ],
     "name": "humanize-numbers",
-    "version": "1.0.2",
+    "version": "1.0.21",
     "description": "Make large numbers human readable",
     "keywords": [
         "readable",
