@@ -1,4 +1,11 @@
-export const ranks = [{
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getRankProperty = getRankProperty;
+exports.ranks = void 0;
+var ranks = exports.ranks = [{
   unit: 1e3,
   unitName: 'thousand',
   abbr: 'K',
@@ -857,7 +864,7 @@ export const ranks = [{
     }
   }
 }];
-ranks.forEach(rank => {
+ranks.forEach(function (rank) {
   if (typeof rank.locales['ru'].unitName === 'string') {
     rank.locales['ru'].unitName = {
       'one': rank.locales['ru'].unitName,
@@ -870,9 +877,10 @@ ranks.forEach(rank => {
     };
   }
 });
-export function getRankProperty(rank, locale, prop) {
+function getRankProperty(rank, locale, prop) {
   if (rank.locales[locale] != null) {
-    return rank.locales[locale][prop] ?? rank[prop];
+    var _rank$locales$locale$;
+    return (_rank$locales$locale$ = rank.locales[locale][prop]) !== null && _rank$locales$locale$ !== void 0 ? _rank$locales$locale$ : rank[prop];
   }
   return rank[prop];
 }
