@@ -281,7 +281,7 @@ export function humanizeWithFormat(num, {
 	fractionCount = 0,
 	separator = '',
 	formatSeparator = '',
-	roundFunctionName = 'round'
+	roundFunctionName = 'floor'
 } = {}) {
 	let readable = '';
 	let dividedNum = num;

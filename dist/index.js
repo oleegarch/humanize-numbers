@@ -293,7 +293,7 @@ export function humanizeWithFormat(num) {
     _ref2$formatSeparator = _ref2.formatSeparator,
     formatSeparator = _ref2$formatSeparator === void 0 ? '' : _ref2$formatSeparator,
     _ref2$roundFunctionNa = _ref2.roundFunctionName,
-    roundFunctionName = _ref2$roundFunctionNa === void 0 ? 'round' : _ref2$roundFunctionNa;
+    roundFunctionName = _ref2$roundFunctionNa === void 0 ? 'floor' : _ref2$roundFunctionNa;
   var readable = '';
   var dividedNum = num;
   for (var index = format.length - 1; index >= 0; index--) {
