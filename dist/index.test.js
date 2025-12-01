@@ -3,8 +3,8 @@ import { setGlobalLocale, humanizeNumberXS, humanizeNumberSM, humanizeNumberMD, 
 describe('humanizeNumber', function () {
   it('en variants', function () {
     /*
-    * standart size
-    */
+     * standart size
+     */
     expect(humanizeNumber(1000)).toBe('1 thousand');
     expect(humanizeNumber(10000)).toBe('10 thousand');
     expect(humanizeNumber(1000000)).toBe('1 million');
@@ -18,8 +18,8 @@ describe('humanizeNumber', function () {
     expect(humanizeNumber(1e303)).toBe('1 centillion');
 
     /*
-    * small size
-    */
+     * small size
+     */
     expect(humanizeNumberSM(1000)).toBe('1K');
     expect(humanizeNumberSM(10000)).toBe('10K');
     expect(humanizeNumberSM(1000000)).toBe('1M');
@@ -32,16 +32,16 @@ describe('humanizeNumber', function () {
     expect(humanizeNumberSM(1e303)).toBe('1 centillion');
 
     /*
-    * extra small size
-    */
+     * extra small size
+     */
     expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx');
   });
   it('ru variants', function () {
     setGlobalLocale('ru');
 
     /*
-    * standart size
-    */
+     * standart size
+     */
     expect(humanizeNumber(100)).toBe('100');
     expect(humanizeNumber(1000)).toBe('1 тысяча');
     expect(humanizeNumber(10000)).toBe('10 тысяч');
@@ -56,8 +56,8 @@ describe('humanizeNumber', function () {
     expect(humanizeNumber(1e303)).toBe('1 центиллион');
 
     /*
-    * small size
-    */
+     * small size
+     */
     expect(humanizeNumberSM(1000)).toBe('1 тыс.');
     expect(humanizeNumberSM(10000)).toBe('10 тыс.');
     expect(humanizeNumberSM(1000000)).toBe('1 млн');
@@ -71,14 +71,14 @@ describe('humanizeNumber', function () {
     expect(humanizeNumberSM(1e303)).toBe('1 центиллион');
 
     /*
-    * extra small size
-    */
-    expect(humanizeNumberXS(10000)).toBe('10K');
-    expect(humanizeNumberXS(1000000)).toBe('1M');
-    expect(humanizeNumberXS(2100000)).toBe('2.1M');
-    expect(humanizeNumberXS(11000000)).toBe('11M');
+     * extra small size
+     */
+    expect(humanizeNumberXS(10000)).toBe('10К');
+    expect(humanizeNumberXS(1000000)).toBe('1М');
+    expect(humanizeNumberXS(2100000)).toBe('2.1М');
+    expect(humanizeNumberXS(11000000)).toBe('11М');
     expect(humanizeNumberXS(1234567890)).toBe('1.2B');
-    expect(humanizeNumberXS(1234567890123)).toBe('1.2T');
+    expect(humanizeNumberXS(1234567890123)).toBe('1.2Т');
     expect(humanizeNumberXS(1.222e15)).toBe('1.2 Qa');
     expect(humanizeNumberXS(1.222e18 + 2)).toBe('1.2 Qi');
     expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx');
@@ -88,16 +88,16 @@ describe('humanizeNumber', function () {
     /* using certain unit rank: */
     expect(humanizeNumberXS(500, {
       withUnit: 1e3
-    })).toBe('0.5K');
+    })).toBe('0.5К');
     expect(humanizeNumberXS(1e9, {
       withUnit: 1e3
-    })).toBe('1KKK');
+    })).toBe('1ККК');
     expect(humanizeNumberXS(1e12, {
       withUnit: 1e3
-    })).toBe('1KKKK');
+    })).toBe('1КККК');
     expect(humanizeNumberXS(1e12, {
       withUnit: 1e6
-    })).toBe('1MM');
+    })).toBe('1ММ');
 
     /* using certain locale: */
     expect(humanizeNumberMD(1e9, {
@@ -204,45 +204,83 @@ test('round', function () {
   expect(beutifulCeil(111111)).toBe(120000);
   expect(beutifulCeil(111111, 2)).toBe(112000);
 });
-test('textToNumbers', function () {
-  expect(textToNumbers('user input: 10 тысяч')).toEqual({
-    numbers: [10000],
-    textWithoutNumbers: 'user input: '
+describe('textToNumbers', function () {
+  it('abbr', function () {
+    expect(textToNumbers('1K')).toEqual({
+      numbers: [1000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1M')).toEqual({
+      numbers: [1000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1B')).toEqual({
+      numbers: [1000000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1T')).toEqual({
+      numbers: [1000000000000],
+      textWithoutNumbers: ''
+    });
   });
-  expect(textToNumbers('1 миллион')).toEqual({
-    numbers: [1000000],
-    textWithoutNumbers: ''
+  it('abbr ru', function () {
+    expect(textToNumbers('1К')).toEqual({
+      numbers: [1000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1М')).toEqual({
+      numbers: [1000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1B')).toEqual({
+      numbers: [1000000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1Т')).toEqual({
+      numbers: [1000000000000],
+      textWithoutNumbers: ''
+    });
   });
-  expect(textToNumbers('1.1 млн')).toEqual({
-    numbers: [1100000],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1.11 млн')).toEqual({
-    numbers: [1110000],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1.23 млрд')).toEqual({
-    numbers: [1230000000],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1.23 трлн')).toEqual({
-    numbers: [1230000000000],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1.22 квадриллиона')).toEqual({
-    numbers: [1.22e15],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1.22 квинтиллионов')).toEqual({
-    numbers: [1.22e18],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1.22 секстиллионов')).toEqual({
-    numbers: [1.22e21],
-    textWithoutNumbers: ''
-  });
-  expect(textToNumbers('1000, 2000, 10 тысяч')).toEqual({
-    numbers: [1000, 2000, 10000],
-    textWithoutNumbers: ', , '
+  it('full text', function () {
+    expect(textToNumbers('user input: 10 тысяч')).toEqual({
+      numbers: [10000],
+      textWithoutNumbers: 'user input: '
+    });
+    expect(textToNumbers('1 миллион')).toEqual({
+      numbers: [1000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.1 млн')).toEqual({
+      numbers: [1100000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.11 млн')).toEqual({
+      numbers: [1110000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.23 млрд')).toEqual({
+      numbers: [1230000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.23 трлн')).toEqual({
+      numbers: [1230000000000],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.22 квадриллиона')).toEqual({
+      numbers: [1.22e15],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.22 квинтиллионов')).toEqual({
+      numbers: [1.22e18],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1.22 секстиллионов')).toEqual({
+      numbers: [1.22e21],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1000, 2000, 10 тысяч')).toEqual({
+      numbers: [1000, 2000, 10000],
+      textWithoutNumbers: ', , '
+    });
   });
 });

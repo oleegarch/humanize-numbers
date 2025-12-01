@@ -332,7 +332,7 @@ export function humanizeAlphabet(num, upper = false) {
  * 1.22 секстиллиона   = 1.22e21
  *
  */
-const numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[а-яa-z]+)?/gi
+const numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[ёа-яa-z]+)?/gi
 const removeNonLettersSymbols = (t) => t.replace(/[\.,:;\(\)]/g, '')
 
 export function textToNumbers(text, options = {}) {
@@ -340,14 +340,20 @@ export function textToNumbers(text, options = {}) {
 	const currentLocale = options.locale ?? locale
 
 	text = text.replace(numbersRegexp, function (allMatch, match1, match2) {
-		const unitLabel = (match2 ?? '').toLowerCase().trim()
 		const num = parseFloat(match1)
-		const rank = ranks.find((rank) => isTextMeansThisRank(unitLabel, rank, currentLocale))
+		let rank
 
-		if (rank) {
-			const abbrCount = getUnitLabelAbbrCount(unitLabel, rank) ?? 1
-			numbers.push(num * rank.unit ** abbrCount)
-		} else {
+		if (match2 != null) {
+			const unitLabel = (match2 ?? '').toLowerCase().trim()
+			rank = ranks.find((rank) => isTextMeansThisRank(unitLabel, rank, currentLocale))
+
+			if (rank) {
+				const abbrCount = getUnitLabelAbbrCount(unitLabel, rank) ?? 1
+				numbers.push(num * rank.unit ** abbrCount)
+			}
+		}
+
+		if (rank == null) {
 			numbers.push(num)
 		}
 
@@ -390,6 +396,8 @@ export function isTextMeansThisRank(text, rank, locale) {
 		regexpStr += prefixStr + `^(${removeNonLettersSymbols(abbrDefault)})+$`
 		prefixStr = '|'
 	}
+
+	console.log(rank.unit, text, regexpStr)
 
 	return new RegExp(regexpStr, 'i').test(text)
 }

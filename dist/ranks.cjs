@@ -10,16 +10,17 @@ var ranks = exports.ranks = [{
   unitName: 'thousand',
   abbr: 'K',
   locales: {
-    'ru': {
+    ru: {
+      abbr: 'К',
       abbreviation: 'тыс.',
       unitName: {
-        'one': 'тысяча',
+        one: 'тысяча',
         // 1 тысяча
-        'few': 'тысячи',
+        few: 'тысячи',
         // 2 тысячи
-        'many': 'тысяч',
+        many: 'тысяч',
         // 10 тысяч
-        'other': 'тысячи' // 1.22 тысячи
+        other: 'тысячи' // 1.22 тысячи
       }
     }
   }
@@ -28,7 +29,8 @@ var ranks = exports.ranks = [{
   unitName: 'million',
   abbr: 'M',
   locales: {
-    'ru': {
+    ru: {
+      abbr: 'М',
       abbreviation: 'млн',
       unitName: 'миллион'
     }
@@ -38,7 +40,8 @@ var ranks = exports.ranks = [{
   unitName: 'billion',
   abbr: 'B',
   locales: {
-    'ru': {
+    ru: {
+      abbr: 'B',
       abbreviation: 'млрд',
       unitName: 'миллиард'
     }
@@ -48,7 +51,8 @@ var ranks = exports.ranks = [{
   unitName: 'trillion',
   abbr: 'T',
   locales: {
-    'ru': {
+    ru: {
+      abbr: 'Т',
       abbreviation: 'трлн',
       unitName: 'триллион'
     }
@@ -58,7 +62,7 @@ var ranks = exports.ranks = [{
   unitName: 'quadrillion',
   abbr: 'Qa',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Qa',
       unitName: 'квадриллион'
     }
@@ -68,7 +72,7 @@ var ranks = exports.ranks = [{
   unitName: 'quintillion',
   abbr: 'Qi',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Qi',
       unitName: 'квинтиллион'
     }
@@ -78,7 +82,7 @@ var ranks = exports.ranks = [{
   unitName: 'sextillion',
   abbr: 'Sx',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Sx',
       unitName: 'секстиллион'
     }
@@ -88,7 +92,7 @@ var ranks = exports.ranks = [{
   unitName: 'septillion',
   abbr: 'Sp',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Sp',
       unitName: 'септиллион'
     }
@@ -98,7 +102,7 @@ var ranks = exports.ranks = [{
   unitName: 'octillion',
   abbr: 'Oc',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Oc',
       unitName: 'октиллион'
     }
@@ -108,7 +112,7 @@ var ranks = exports.ranks = [{
   unitName: 'nonillion',
   abbr: 'No',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'No',
       unitName: 'нониллион'
     }
@@ -118,7 +122,7 @@ var ranks = exports.ranks = [{
   unitName: 'decillion',
   abbr: 'Dc',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Dc',
       unitName: 'дециллион'
     }
@@ -128,7 +132,7 @@ var ranks = exports.ranks = [{
   unitName: 'undecillion',
   abbr: 'Und',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Und',
       unitName: 'ундециллион'
     }
@@ -138,7 +142,7 @@ var ranks = exports.ranks = [{
   unitName: 'duodecillion',
   abbr: 'Dud',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Dud',
       unitName: 'дуодециллион'
     }
@@ -148,7 +152,7 @@ var ranks = exports.ranks = [{
   unitName: 'tredecillion',
   abbr: 'Trd',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Trd',
       unitName: 'тредециллион'
     }
@@ -158,7 +162,7 @@ var ranks = exports.ranks = [{
   unitName: 'quattuordecillion',
   abbr: 'Qud',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Qud',
       unitName: 'кватуордециллион'
     }
@@ -168,7 +172,7 @@ var ranks = exports.ranks = [{
   unitName: 'quindecillion',
   abbr: 'Qid',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Qid',
       unitName: 'квиндециллион'
     }
@@ -178,7 +182,7 @@ var ranks = exports.ranks = [{
   unitName: 'sexdecillion',
   abbr: 'Sed',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Sed',
       unitName: 'сексдециллион'
     }
@@ -188,7 +192,7 @@ var ranks = exports.ranks = [{
   unitName: 'septendecillion',
   abbr: 'Spd',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Spd',
       unitName: 'септендециллион'
     }
@@ -198,7 +202,7 @@ var ranks = exports.ranks = [{
   unitName: 'octodecillion',
   abbr: 'Ocd',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Ocd',
       unitName: 'октодециллион'
     }
@@ -208,7 +212,7 @@ var ranks = exports.ranks = [{
   unitName: 'novemdecillion',
   abbr: 'Nod',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Nod',
       unitName: 'новемдециллион'
     }
@@ -218,7 +222,7 @@ var ranks = exports.ranks = [{
   unitName: 'vigintillion',
   abbr: 'Vig',
   locales: {
-    'ru': {
+    ru: {
       abbreviation: 'Vig',
       unitName: 'вигинтиллион'
     }
@@ -227,7 +231,7 @@ var ranks = exports.ranks = [{
   unit: 1e66,
   unitName: 'unvigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'унвигинтиллион'
     }
   }
@@ -235,7 +239,7 @@ var ranks = exports.ranks = [{
   unit: 1e69,
   unitName: 'duovigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуовигинтиллион'
     }
   }
@@ -243,7 +247,7 @@ var ranks = exports.ranks = [{
   unit: 1e72,
   unitName: 'trevigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'тревигинтиллион'
     }
   }
@@ -251,7 +255,7 @@ var ranks = exports.ranks = [{
   unit: 1e75,
   unitName: 'quattuorvigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кватуорвигинтиллион'
     }
   }
@@ -259,7 +263,7 @@ var ranks = exports.ranks = [{
   unit: 1e78,
   unitName: 'quinvigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинвигинтиллион'
     }
   }
@@ -267,7 +271,7 @@ var ranks = exports.ranks = [{
   unit: 1e81,
   unitName: 'sexvigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'сексвигинтиллион'
     }
   }
@@ -275,7 +279,7 @@ var ranks = exports.ranks = [{
   unit: 1e84,
   unitName: 'septenvigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септенвигинтиллион'
     }
   }
@@ -283,7 +287,7 @@ var ranks = exports.ranks = [{
   unit: 1e87,
   unitName: 'octovigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октовигинтиллион'
     }
   }
@@ -291,7 +295,7 @@ var ranks = exports.ranks = [{
   unit: 1e90,
   unitName: 'novemvigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемвигинтиллион'
     }
   }
@@ -299,7 +303,7 @@ var ranks = exports.ranks = [{
   unit: 1e93,
   unitName: 'trigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'тригинтиллион'
     }
   }
@@ -307,7 +311,7 @@ var ranks = exports.ranks = [{
   unit: 1e96,
   unitName: 'untrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'унтригинтиллион'
     }
   }
@@ -315,7 +319,7 @@ var ranks = exports.ranks = [{
   unit: 1e99,
   unitName: 'duotrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуотригинтиллион'
     }
   }
@@ -323,7 +327,7 @@ var ranks = exports.ranks = [{
   unit: 1e102,
   unitName: 'trestrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'третригинтиллион'
     }
   }
@@ -331,7 +335,7 @@ var ranks = exports.ranks = [{
   unit: 1e105,
   unitName: 'quattuortrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кватортригинтиллион'
     }
   }
@@ -339,7 +343,7 @@ var ranks = exports.ranks = [{
   unit: 1e108,
   unitName: 'quintrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинтригинтиллион'
     }
   }
@@ -347,7 +351,7 @@ var ranks = exports.ranks = [{
   unit: 1e111,
   unitName: 'sextrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'секстригинтиллион'
     }
   }
@@ -355,7 +359,7 @@ var ranks = exports.ranks = [{
   unit: 1e114,
   unitName: 'septentrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септентригинтиллион'
     }
   }
@@ -363,7 +367,7 @@ var ranks = exports.ranks = [{
   unit: 1e117,
   unitName: 'octotrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октотригинтиллион'
     }
   }
@@ -371,7 +375,7 @@ var ranks = exports.ranks = [{
   unit: 1e120,
   unitName: 'novemtrigintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемтригинтиллион'
     }
   }
@@ -379,7 +383,7 @@ var ranks = exports.ranks = [{
   unit: 1e123,
   unitName: 'quadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квадрагинтиллион'
     }
   }
@@ -387,7 +391,7 @@ var ranks = exports.ranks = [{
   unit: 1e126,
   unitName: 'unquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'унквадрагинтиллион'
     }
   }
@@ -395,7 +399,7 @@ var ranks = exports.ranks = [{
   unit: 1e129,
   unitName: 'duoquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуоквадрагинтиллион'
     }
   }
@@ -403,7 +407,7 @@ var ranks = exports.ranks = [{
   unit: 1e132,
   unitName: 'trequadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'треквадрагинтиллион'
     }
   }
@@ -411,7 +415,7 @@ var ranks = exports.ranks = [{
   unit: 1e135,
   unitName: 'quattuorquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кваторквадрагинтиллион'
     }
   }
@@ -419,7 +423,7 @@ var ranks = exports.ranks = [{
   unit: 1e138,
   unitName: 'quinquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинквадрагинтиллион'
     }
   }
@@ -427,7 +431,7 @@ var ranks = exports.ranks = [{
   unit: 1e141,
   unitName: 'sexquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'сексквадрагинтиллион'
     }
   }
@@ -435,7 +439,7 @@ var ranks = exports.ranks = [{
   unit: 1e144,
   unitName: 'septenquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септенквадрагинтиллион'
     }
   }
@@ -443,7 +447,7 @@ var ranks = exports.ranks = [{
   unit: 1e147,
   unitName: 'octoquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октоквадрагинтиллион'
     }
   }
@@ -451,7 +455,7 @@ var ranks = exports.ranks = [{
   unit: 1e150,
   unitName: 'novemquadragintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемквадрагинтиллион'
     }
   }
@@ -459,7 +463,7 @@ var ranks = exports.ranks = [{
   unit: 1e153,
   unitName: 'quinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинквагинтиллион'
     }
   }
@@ -467,7 +471,7 @@ var ranks = exports.ranks = [{
   unit: 1e156,
   unitName: 'unquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'унквинкагинтиллион'
     }
   }
@@ -475,7 +479,7 @@ var ranks = exports.ranks = [{
   unit: 1e159,
   unitName: 'duoquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуоквинкагинтиллион'
     }
   }
@@ -483,7 +487,7 @@ var ranks = exports.ranks = [{
   unit: 1e162,
   unitName: 'trequinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'треквинкагинтиллион'
     }
   }
@@ -491,7 +495,7 @@ var ranks = exports.ranks = [{
   unit: 1e165,
   unitName: 'quattuorquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кваторквинкагинтиллион'
     }
   }
@@ -499,7 +503,7 @@ var ranks = exports.ranks = [{
   unit: 1e168,
   unitName: 'quinquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинквинкагинтиллион'
     }
   }
@@ -507,7 +511,7 @@ var ranks = exports.ranks = [{
   unit: 1e171,
   unitName: 'sexquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'сексквинкагинтиллион'
     }
   }
@@ -515,7 +519,7 @@ var ranks = exports.ranks = [{
   unit: 1e174,
   unitName: 'septenquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септенквинкагинтиллион'
     }
   }
@@ -523,7 +527,7 @@ var ranks = exports.ranks = [{
   unit: 1e177,
   unitName: 'octoquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октоквинкагинтиллион'
     }
   }
@@ -531,7 +535,7 @@ var ranks = exports.ranks = [{
   unit: 1e180,
   unitName: 'novemquinquagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемквинкагинтиллион'
     }
   }
@@ -539,7 +543,7 @@ var ranks = exports.ranks = [{
   unit: 1e183,
   unitName: 'sexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'сексагинтиллион'
     }
   }
@@ -547,7 +551,7 @@ var ranks = exports.ranks = [{
   unit: 1e186,
   unitName: 'unsexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'унсексагинтиллион'
     }
   }
@@ -555,7 +559,7 @@ var ranks = exports.ranks = [{
   unit: 1e189,
   unitName: 'duosexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуосексагинтиллион'
     }
   }
@@ -563,7 +567,7 @@ var ranks = exports.ranks = [{
   unit: 1e192,
   unitName: 'tresexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'тресексагинтиллион'
     }
   }
@@ -571,7 +575,7 @@ var ranks = exports.ranks = [{
   unit: 1e195,
   unitName: 'quattuorsexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кваторсексагинтиллион'
     }
   }
@@ -579,7 +583,7 @@ var ranks = exports.ranks = [{
   unit: 1e198,
   unitName: 'quinsexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинсексагинтиллион'
     }
   }
@@ -587,7 +591,7 @@ var ranks = exports.ranks = [{
   unit: 1e201,
   unitName: 'sexsexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'секссексагинтиллион'
     }
   }
@@ -595,7 +599,7 @@ var ranks = exports.ranks = [{
   unit: 1e204,
   unitName: 'septensexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септенсексагинтиллион'
     }
   }
@@ -603,7 +607,7 @@ var ranks = exports.ranks = [{
   unit: 1e207,
   unitName: 'octosexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октосексагинтиллион'
     }
   }
@@ -611,7 +615,7 @@ var ranks = exports.ranks = [{
   unit: 1e210,
   unitName: 'novemsexagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемсексагинтиллион'
     }
   }
@@ -619,7 +623,7 @@ var ranks = exports.ranks = [{
   unit: 1e213,
   unitName: 'septuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септагинтиллион'
     }
   }
@@ -627,7 +631,7 @@ var ranks = exports.ranks = [{
   unit: 1e216,
   unitName: 'unseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'унсептагинтиллион'
     }
   }
@@ -635,7 +639,7 @@ var ranks = exports.ranks = [{
   unit: 1e219,
   unitName: 'duoseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуосептагинтиллион'
     }
   }
@@ -643,7 +647,7 @@ var ranks = exports.ranks = [{
   unit: 1e222,
   unitName: 'treseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'тресептагинтиллион'
     }
   }
@@ -651,7 +655,7 @@ var ranks = exports.ranks = [{
   unit: 1e225,
   unitName: 'quattuorseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кваторсептагинтиллион'
     }
   }
@@ -659,7 +663,7 @@ var ranks = exports.ranks = [{
   unit: 1e228,
   unitName: 'quinseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квинсептагинтиллион'
     }
   }
@@ -667,7 +671,7 @@ var ranks = exports.ranks = [{
   unit: 1e231,
   unitName: 'sexseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'секссептагинтиллион'
     }
   }
@@ -675,7 +679,7 @@ var ranks = exports.ranks = [{
   unit: 1e234,
   unitName: 'septenseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септенсептагинтиллион'
     }
   }
@@ -683,7 +687,7 @@ var ranks = exports.ranks = [{
   unit: 1e237,
   unitName: 'octoseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октосептагинтиллион'
     }
   }
@@ -691,7 +695,7 @@ var ranks = exports.ranks = [{
   unit: 1e240,
   unitName: 'novemseptuagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемсептагинтиллион'
     }
   }
@@ -699,7 +703,7 @@ var ranks = exports.ranks = [{
   unit: 1e243,
   unitName: 'octogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октогинтиллион'
     }
   }
@@ -707,7 +711,7 @@ var ranks = exports.ranks = [{
   unit: 1e246,
   unitName: 'unoctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'уноктогинтиллион'
     }
   }
@@ -715,7 +719,7 @@ var ranks = exports.ranks = [{
   unit: 1e249,
   unitName: 'duooctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуооктогинтиллион'
     }
   }
@@ -723,7 +727,7 @@ var ranks = exports.ranks = [{
   unit: 1e252,
   unitName: 'treoctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'треоктогинтиллион'
     }
   }
@@ -731,7 +735,7 @@ var ranks = exports.ranks = [{
   unit: 1e255,
   unitName: 'quattuoroctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кватороктогинтиллион'
     }
   }
@@ -739,7 +743,7 @@ var ranks = exports.ranks = [{
   unit: 1e258,
   unitName: 'quinoctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квиноктогинтиллион'
     }
   }
@@ -747,7 +751,7 @@ var ranks = exports.ranks = [{
   unit: 1e261,
   unitName: 'sexoctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'сексоктогинтиллион'
     }
   }
@@ -755,7 +759,7 @@ var ranks = exports.ranks = [{
   unit: 1e264,
   unitName: 'septoctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септоктогинтиллион'
     }
   }
@@ -763,7 +767,7 @@ var ranks = exports.ranks = [{
   unit: 1e267,
   unitName: 'octooctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октооктогинтиллион'
     }
   }
@@ -771,7 +775,7 @@ var ranks = exports.ranks = [{
   unit: 1e270,
   unitName: 'novemoctogintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемоктогинтиллион'
     }
   }
@@ -779,7 +783,7 @@ var ranks = exports.ranks = [{
   unit: 1e273,
   unitName: 'nonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'нонагинтиллион'
     }
   }
@@ -787,7 +791,7 @@ var ranks = exports.ranks = [{
   unit: 1e276,
   unitName: 'unnonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'уннонагинтиллион'
     }
   }
@@ -795,7 +799,7 @@ var ranks = exports.ranks = [{
   unit: 1e279,
   unitName: 'duononagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'дуононагинтиллион'
     }
   }
@@ -803,7 +807,7 @@ var ranks = exports.ranks = [{
   unit: 1e282,
   unitName: 'trenonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'тренонагинтиллион'
     }
   }
@@ -811,7 +815,7 @@ var ranks = exports.ranks = [{
   unit: 1e285,
   unitName: 'quattuornonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'кваторнонагинтиллион'
     }
   }
@@ -819,7 +823,7 @@ var ranks = exports.ranks = [{
   unit: 1e288,
   unitName: 'quinnonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'квиннонагинтиллион'
     }
   }
@@ -827,7 +831,7 @@ var ranks = exports.ranks = [{
   unit: 1e291,
   unitName: 'sexnonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'секснонагинтиллион'
     }
   }
@@ -835,7 +839,7 @@ var ranks = exports.ranks = [{
   unit: 1e294,
   unitName: 'septennonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'септеннонагинтиллион'
     }
   }
@@ -843,7 +847,7 @@ var ranks = exports.ranks = [{
   unit: 1e297,
   unitName: 'octononagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'октононагинтиллион'
     }
   }
@@ -851,7 +855,7 @@ var ranks = exports.ranks = [{
   unit: 1e300,
   unitName: 'novemnonagintillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'новемнонагинтиллион'
     }
   }
@@ -859,7 +863,7 @@ var ranks = exports.ranks = [{
   unit: 1e303,
   unitName: 'centillion',
   locales: {
-    'ru': {
+    ru: {
       unitName: 'центиллион'
     }
   }
@@ -867,13 +871,13 @@ var ranks = exports.ranks = [{
 ranks.forEach(function (rank) {
   if (typeof rank.locales['ru'].unitName === 'string') {
     rank.locales['ru'].unitName = {
-      'one': rank.locales['ru'].unitName,
+      one: rank.locales['ru'].unitName,
       // 1 миллион
-      'few': rank.locales['ru'].unitName + 'а',
+      few: rank.locales['ru'].unitName + 'а',
       // 2 миллиона
-      'many': rank.locales['ru'].unitName + 'ов',
+      many: rank.locales['ru'].unitName + 'ов',
       // 10 миллионов
-      'other': rank.locales['ru'].unitName + 'а' // 1.22 миллиона
+      other: rank.locales['ru'].unitName + 'а' // 1.22 миллиона
     };
   }
 });

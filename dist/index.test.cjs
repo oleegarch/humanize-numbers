@@ -5,8 +5,8 @@ var _index = require("./index.js");
 (0, _vitest.describe)('humanizeNumber', function () {
   (0, _vitest.it)('en variants', function () {
     /*
-    * standart size
-    */
+     * standart size
+     */
     (0, _vitest.expect)((0, _index.humanizeNumber)(1000)).toBe('1 thousand');
     (0, _vitest.expect)((0, _index.humanizeNumber)(10000)).toBe('10 thousand');
     (0, _vitest.expect)((0, _index.humanizeNumber)(1000000)).toBe('1 million');
@@ -20,8 +20,8 @@ var _index = require("./index.js");
     (0, _vitest.expect)((0, _index.humanizeNumber)(1e303)).toBe('1 centillion');
 
     /*
-    * small size
-    */
+     * small size
+     */
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(1000)).toBe('1K');
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(10000)).toBe('10K');
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(1000000)).toBe('1M');
@@ -34,16 +34,16 @@ var _index = require("./index.js");
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(1e303)).toBe('1 centillion');
 
     /*
-    * extra small size
-    */
+     * extra small size
+     */
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1.222e21 + 2)).toBe('1.2 Sx');
   });
   (0, _vitest.it)('ru variants', function () {
     (0, _index.setGlobalLocale)('ru');
 
     /*
-    * standart size
-    */
+     * standart size
+     */
     (0, _vitest.expect)((0, _index.humanizeNumber)(100)).toBe('100');
     (0, _vitest.expect)((0, _index.humanizeNumber)(1000)).toBe('1 тысяча');
     (0, _vitest.expect)((0, _index.humanizeNumber)(10000)).toBe('10 тысяч');
@@ -58,8 +58,8 @@ var _index = require("./index.js");
     (0, _vitest.expect)((0, _index.humanizeNumber)(1e303)).toBe('1 центиллион');
 
     /*
-    * small size
-    */
+     * small size
+     */
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(1000)).toBe('1 тыс.');
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(10000)).toBe('10 тыс.');
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(1000000)).toBe('1 млн');
@@ -73,14 +73,14 @@ var _index = require("./index.js");
     (0, _vitest.expect)((0, _index.humanizeNumberSM)(1e303)).toBe('1 центиллион');
 
     /*
-    * extra small size
-    */
-    (0, _vitest.expect)((0, _index.humanizeNumberXS)(10000)).toBe('10K');
-    (0, _vitest.expect)((0, _index.humanizeNumberXS)(1000000)).toBe('1M');
-    (0, _vitest.expect)((0, _index.humanizeNumberXS)(2100000)).toBe('2.1M');
-    (0, _vitest.expect)((0, _index.humanizeNumberXS)(11000000)).toBe('11M');
+     * extra small size
+     */
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(10000)).toBe('10К');
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(1000000)).toBe('1М');
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(2100000)).toBe('2.1М');
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(11000000)).toBe('11М');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1234567890)).toBe('1.2B');
-    (0, _vitest.expect)((0, _index.humanizeNumberXS)(1234567890123)).toBe('1.2T');
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(1234567890123)).toBe('1.2Т');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1.222e15)).toBe('1.2 Qa');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1.222e18 + 2)).toBe('1.2 Qi');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1.222e21 + 2)).toBe('1.2 Sx');
@@ -90,16 +90,16 @@ var _index = require("./index.js");
     /* using certain unit rank: */
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(500, {
       withUnit: 1e3
-    })).toBe('0.5K');
+    })).toBe('0.5К');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1e9, {
       withUnit: 1e3
-    })).toBe('1KKK');
+    })).toBe('1ККК');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1e12, {
       withUnit: 1e3
-    })).toBe('1KKKK');
+    })).toBe('1КККК');
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1e12, {
       withUnit: 1e6
-    })).toBe('1MM');
+    })).toBe('1ММ');
 
     /* using certain locale: */
     (0, _vitest.expect)((0, _index.humanizeNumberMD)(1e9, {
@@ -206,45 +206,83 @@ var _index = require("./index.js");
   (0, _vitest.expect)((0, _index.beutifulCeil)(111111)).toBe(120000);
   (0, _vitest.expect)((0, _index.beutifulCeil)(111111, 2)).toBe(112000);
 });
-(0, _vitest.test)('textToNumbers', function () {
-  (0, _vitest.expect)((0, _index.textToNumbers)('user input: 10 тысяч')).toEqual({
-    numbers: [10000],
-    textWithoutNumbers: 'user input: '
+(0, _vitest.describe)('textToNumbers', function () {
+  (0, _vitest.it)('abbr', function () {
+    (0, _vitest.expect)((0, _index.textToNumbers)('1K')).toEqual({
+      numbers: [1000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1M')).toEqual({
+      numbers: [1000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1B')).toEqual({
+      numbers: [1000000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1T')).toEqual({
+      numbers: [1000000000000],
+      textWithoutNumbers: ''
+    });
   });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1 миллион')).toEqual({
-    numbers: [1000000],
-    textWithoutNumbers: ''
+  (0, _vitest.it)('abbr ru', function () {
+    (0, _vitest.expect)((0, _index.textToNumbers)('1К')).toEqual({
+      numbers: [1000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1М')).toEqual({
+      numbers: [1000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1B')).toEqual({
+      numbers: [1000000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1Т')).toEqual({
+      numbers: [1000000000000],
+      textWithoutNumbers: ''
+    });
   });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.1 млн')).toEqual({
-    numbers: [1100000],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.11 млн')).toEqual({
-    numbers: [1110000],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.23 млрд')).toEqual({
-    numbers: [1230000000],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.23 трлн')).toEqual({
-    numbers: [1230000000000],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.22 квадриллиона')).toEqual({
-    numbers: [1.22e15],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.22 квинтиллионов')).toEqual({
-    numbers: [1.22e18],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1.22 секстиллионов')).toEqual({
-    numbers: [1.22e21],
-    textWithoutNumbers: ''
-  });
-  (0, _vitest.expect)((0, _index.textToNumbers)('1000, 2000, 10 тысяч')).toEqual({
-    numbers: [1000, 2000, 10000],
-    textWithoutNumbers: ', , '
+  (0, _vitest.it)('full text', function () {
+    (0, _vitest.expect)((0, _index.textToNumbers)('user input: 10 тысяч')).toEqual({
+      numbers: [10000],
+      textWithoutNumbers: 'user input: '
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1 миллион')).toEqual({
+      numbers: [1000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.1 млн')).toEqual({
+      numbers: [1100000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.11 млн')).toEqual({
+      numbers: [1110000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.23 млрд')).toEqual({
+      numbers: [1230000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.23 трлн')).toEqual({
+      numbers: [1230000000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.22 квадриллиона')).toEqual({
+      numbers: [1.22e15],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.22 квинтиллионов')).toEqual({
+      numbers: [1.22e18],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.22 секстиллионов')).toEqual({
+      numbers: [1.22e21],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1000, 2000, 10 тысяч')).toEqual({
+      numbers: [1000, 2000, 10000],
+      textWithoutNumbers: ', , '
+    });
   });
 });

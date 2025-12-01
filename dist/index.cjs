@@ -367,7 +367,7 @@ function humanizeAlphabet(num) {
  * 1.22 секстиллиона   = 1.22e21
  *
  */
-var numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[а-яa-z]+)?/gi;
+var numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[ёа-яa-z]+)?/gi;
 var removeNonLettersSymbols = function removeNonLettersSymbols(t) {
   return t.replace(/[\.,:;\(\)]/g, '');
 };
@@ -377,16 +377,20 @@ function textToNumbers(text) {
   var numbers = [];
   var currentLocale = (_options$locale2 = options.locale) !== null && _options$locale2 !== void 0 ? _options$locale2 : locale;
   text = text.replace(numbersRegexp, function (allMatch, match1, match2) {
-    var unitLabel = (match2 !== null && match2 !== void 0 ? match2 : '').toLowerCase().trim();
     var num = parseFloat(match1);
-    var rank = _ranks.ranks.find(function (rank) {
-      return isTextMeansThisRank(unitLabel, rank, currentLocale);
-    });
-    if (rank) {
-      var _getUnitLabelAbbrCoun;
-      var abbrCount = (_getUnitLabelAbbrCoun = getUnitLabelAbbrCount(unitLabel, rank)) !== null && _getUnitLabelAbbrCoun !== void 0 ? _getUnitLabelAbbrCoun : 1;
-      numbers.push(num * Math.pow(rank.unit, abbrCount));
-    } else {
+    var rank;
+    if (match2 != null) {
+      var unitLabel = (match2 !== null && match2 !== void 0 ? match2 : '').toLowerCase().trim();
+      rank = _ranks.ranks.find(function (rank) {
+        return isTextMeansThisRank(unitLabel, rank, currentLocale);
+      });
+      if (rank) {
+        var _getUnitLabelAbbrCoun;
+        var abbrCount = (_getUnitLabelAbbrCoun = getUnitLabelAbbrCount(unitLabel, rank)) !== null && _getUnitLabelAbbrCoun !== void 0 ? _getUnitLabelAbbrCoun : 1;
+        numbers.push(num * Math.pow(rank.unit, abbrCount));
+      }
+    }
+    if (rank == null) {
       numbers.push(num);
     }
     return '';
@@ -399,6 +403,7 @@ function textToNumbers(text) {
 function isTextMeansThisRank(text, rank, locale) {
   var unitName = (0, _ranks.getRankProperty)(rank, locale, 'unitName');
   var abbr = (0, _ranks.getRankProperty)(rank, locale, 'abbr');
+  var abbrDefault = rank.abbr;
   var abbreviation = (0, _ranks.getRankProperty)(rank, locale, 'abbreviation');
   var regexpStr = '';
   var prefixStr = '';
@@ -421,6 +426,11 @@ function isTextMeansThisRank(text, rank, locale) {
     regexpStr += prefixStr + "^(".concat(removeNonLettersSymbols(abbr), ")+$");
     prefixStr = '|';
   }
+  if (abbrDefault != null && abbrDefault !== abbr) {
+    regexpStr += prefixStr + "^(".concat(removeNonLettersSymbols(abbrDefault), ")+$");
+    prefixStr = '|';
+  }
+  console.log(rank.unit, text, regexpStr);
   return new RegExp(regexpStr, 'i').test(text);
 }
 function getUnitLabelAbbrCount(text, rank) {
