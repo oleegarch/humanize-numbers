@@ -362,6 +362,7 @@ export function textToNumbers(text, options = {}) {
 export function isTextMeansThisRank(text, rank, locale) {
 	let unitName = getRankProperty(rank, locale, 'unitName')
 	let abbr = getRankProperty(rank, locale, 'abbr')
+	let abbrDefault = rank.abbr
 	let abbreviation = getRankProperty(rank, locale, 'abbreviation')
 
 	let regexpStr = ''
@@ -383,6 +384,10 @@ export function isTextMeansThisRank(text, rank, locale) {
 	}
 	if (abbr != null) {
 		regexpStr += prefixStr + `^(${removeNonLettersSymbols(abbr)})+$`
+		prefixStr = '|'
+	}
+	if (abbrDefault != null && abbrDefault !== abbr) {
+		regexpStr += prefixStr + `^(${removeNonLettersSymbols(abbrDefault)})+$`
 		prefixStr = '|'
 	}
 
