@@ -400,7 +400,6 @@ export function isTextMeansThisRank(text, rank, locale) {
     regexpStr += prefixStr + "^(".concat(removeNonLettersSymbols(abbrDefault), ")+$");
     prefixStr = '|';
   }
-  console.log(rank.unit, text, regexpStr);
   return new RegExp(regexpStr, 'i').test(text);
 }
 function getUnitLabelAbbrCount(text, rank) {

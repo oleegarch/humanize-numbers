@@ -397,8 +397,6 @@ export function isTextMeansThisRank(text, rank, locale) {
 		prefixStr = '|'
 	}
 
-	console.log(rank.unit, text, regexpStr)
-
 	return new RegExp(regexpStr, 'i').test(text)
 }
 function getUnitLabelAbbrCount(text, rank) {
