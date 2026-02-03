@@ -221,6 +221,9 @@ function humanizeNumberSM(num, options) {
  *
  * readable numbers MD
  *
+ * 0.000001        = 0.000001
+ * 0.01            = 0.01
+ * 0               = 0
  * 10000           = 10 тысяч
  * 1000000         = 1 миллион
  * 1100000         = 1.1 миллион
@@ -270,7 +273,7 @@ function humanizeNumber(num) {
     }
   }
   if (!rank) {
-    return String(round(num, fractionCount, options.functionName));
+    return num.toString();
   }
   var readable = '';
   var units = num / rank.unit;
@@ -296,7 +299,9 @@ function humanizeNumber(num) {
     dividedUnitLabel += separator + unitLabel;
     dividedUnits /= rank.unit;
   }
-  readable += fullyReadableNumber(round(dividedUnits, fractionCount, options.functionName));
+  var rounded = round(dividedUnits, fractionCount, options.functionName);
+  if (options.zeros) rounded = rounded.toFixed(fractionCount);
+  readable += rounded;
   readable += separator + dividedUnitLabel;
   return readable;
 }

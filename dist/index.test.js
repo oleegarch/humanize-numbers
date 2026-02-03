@@ -35,6 +35,16 @@ describe('humanizeNumber', function () {
      * extra small size
      */
     expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx');
+
+    /*
+     * other variants
+     */
+    expect(humanizeNumber(1)).toBe('1');
+    expect(humanizeNumber(0)).toBe('0');
+    expect(humanizeNumber(0.1)).toBe('0.1');
+    expect(humanizeNumber(0.01)).toBe('0.01');
+    expect(humanizeNumber(0.001)).toBe('0.001');
+    expect(humanizeNumber(0.000001)).toBe('0.000001');
   });
   it('ru variants', function () {
     setGlobalLocale('ru');
@@ -112,6 +122,15 @@ describe('humanizeNumber', function () {
       fractionCount: 4,
       locale: 'ru'
     })).toBe('1.1111 млн');
+
+    /* add zeros in fraction part of the number */
+    expect(humanizeNumberXS(1e9, {
+      zeros: true
+    })).toBe('1.0B');
+    expect(humanizeNumberXS(1e9, {
+      fractionCount: 5,
+      zeros: true
+    })).toBe('1.00000B');
 
     /* using certain size: */
     expect(humanizeNumber(1e9, 'sm', {

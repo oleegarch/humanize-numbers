@@ -185,6 +185,9 @@ export function humanizeNumberSM(num, options) {
  *
  * readable numbers MD
  *
+ * 0.000001        = 0.000001
+ * 0.01            = 0.01
+ * 0               = 0
  * 10000           = 10 тысяч
  * 1000000         = 1 миллион
  * 1100000         = 1.1 миллион
@@ -224,7 +227,7 @@ export function humanizeNumber(num, size = 'md', options = {}) {
 	}
 
 	if (!rank) {
-		return String(round(num, fractionCount, options.functionName))
+		return num.toString()
 	}
 
 	let readable = ''
@@ -257,7 +260,10 @@ export function humanizeNumber(num, size = 'md', options = {}) {
 		dividedUnits /= rank.unit
 	}
 
-	readable += fullyReadableNumber(round(dividedUnits, fractionCount, options.functionName))
+	let rounded = round(dividedUnits, fractionCount, options.functionName)
+	if(options.zeros) rounded = rounded.toFixed(fractionCount)
+		
+	readable += rounded
 	readable += separator + dividedUnitLabel
 
 	return readable

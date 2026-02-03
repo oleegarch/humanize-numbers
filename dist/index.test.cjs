@@ -37,6 +37,16 @@ var _index = require("./index.js");
      * extra small size
      */
     (0, _vitest.expect)((0, _index.humanizeNumberXS)(1.222e21 + 2)).toBe('1.2 Sx');
+
+    /*
+     * other variants
+     */
+    (0, _vitest.expect)((0, _index.humanizeNumber)(1)).toBe('1');
+    (0, _vitest.expect)((0, _index.humanizeNumber)(0)).toBe('0');
+    (0, _vitest.expect)((0, _index.humanizeNumber)(0.1)).toBe('0.1');
+    (0, _vitest.expect)((0, _index.humanizeNumber)(0.01)).toBe('0.01');
+    (0, _vitest.expect)((0, _index.humanizeNumber)(0.001)).toBe('0.001');
+    (0, _vitest.expect)((0, _index.humanizeNumber)(0.000001)).toBe('0.000001');
   });
   (0, _vitest.it)('ru variants', function () {
     (0, _index.setGlobalLocale)('ru');
@@ -114,6 +124,15 @@ var _index = require("./index.js");
       fractionCount: 4,
       locale: 'ru'
     })).toBe('1.1111 млн');
+
+    /* add zeros in fraction part of the number */
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(1e9, {
+      zeros: true
+    })).toBe('1.0B');
+    (0, _vitest.expect)((0, _index.humanizeNumberXS)(1e9, {
+      fractionCount: 5,
+      zeros: true
+    })).toBe('1.00000B');
 
     /* using certain size: */
     (0, _vitest.expect)((0, _index.humanizeNumber)(1e9, 'sm', {

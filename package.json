@@ -3,7 +3,7 @@
 	"author": "Oleg Mikhailov",
 	"type": "module",
 	"name": "humanize-numbers",
-	"version": "1.0.39",
+	"version": "1.0.41",
 	"description": "Make large numbers human readable",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
