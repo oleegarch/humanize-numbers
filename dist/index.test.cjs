@@ -227,6 +227,7 @@ var _index = require("./index.js");
 });
 (0, _vitest.describe)('textToNumbers', function () {
   (0, _vitest.it)('abbr', function () {
+    (0, _index.setGlobalLocale)('en');
     (0, _vitest.expect)((0, _index.textToNumbers)('1K')).toEqual({
       numbers: [1000],
       textWithoutNumbers: ''
@@ -244,7 +245,34 @@ var _index = require("./index.js");
       textWithoutNumbers: ''
     });
   });
+  (0, _vitest.it)('multiple abbr', function () {
+    (0, _vitest.expect)((0, _index.textToNumbers)('1KK')).toEqual({
+      numbers: [1e6],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1KKK')).toEqual({
+      numbers: [1e9],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1MM')).toEqual({
+      numbers: [1e12],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1TT')).toEqual({
+      numbers: [1e24],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1 million million')).toEqual({
+      numbers: [1e6],
+      textWithoutNumbers: ' million'
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1 million 1 million')).toEqual({
+      numbers: [1e6, 1e6],
+      textWithoutNumbers: ' '
+    });
+  });
   (0, _vitest.it)('abbr ru', function () {
+    (0, _index.setGlobalLocale)('ru');
     (0, _vitest.expect)((0, _index.textToNumbers)('1К')).toEqual({
       numbers: [1000],
       textWithoutNumbers: ''

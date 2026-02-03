@@ -13,11 +13,11 @@ export function setGlobalLocale(newLocale) {
   locale = newLocale;
 }
 
-/* lerp */
+/* Calculates a number between two numbers at a specific increment */
 export function lerp(start, end, amt) {
   return (1 - amt) * start + amt * end;
 }
-/* clamp */
+/* Clamps the given value between min and max */
 export function clamp(min, max, num) {
   if (arguments.length === 1) {
     num = min;
@@ -26,12 +26,12 @@ export function clamp(min, max, num) {
   }
   return Math.max(min, Math.min(max, num));
 }
-/* return fraction part of number */
+/* Returns the fractional part of a number */
 export function fract(num) {
   return num % 1;
 }
 
-/* units counter */
+/* Counts the number of units in a number */
 // 1000 = 3
 // 1000000 = 6
 export function countUnits(num) {
@@ -40,7 +40,7 @@ export function countUnits(num) {
 
 /*
  *
- * round, floor, ceil
+ * Rounds a number to a specified number of fractional digits
  *
  * number = 111111.111;
  * fraction =  0: 111111
@@ -79,7 +79,7 @@ export function ceil(num, fractionCount) {
 
 /**
  *
- * Округляет цифры красиво
+ * Rounds a number to a specified number of fractional digits in a beautiful way
  *
  * number = 1111111.111 -> 1100000
  * rfraction =  0: 1000000
@@ -105,7 +105,7 @@ export function beutifulCeil(num) {
 
 /*
  *
- * avoid exponential notation
+ * Avoids exponential notation
  * 1e21 = 1000000000000000000000
  * thank https://stackoverflow.com/questions/1685680/how-to-avoid-scientific-notation-for-large-numbers-in-javascript
  *
@@ -132,7 +132,7 @@ export function avoidExponentialNotation(x) {
 
 /*
  *
- * division numbers
+ * Divides a number into a readable format
  *
  * 1000000 = 1 000 000
  * 1e15    = 1 000 000 000 000 000
@@ -151,7 +151,7 @@ export function fullyReadableNumber(num) {
 
 /*
  *
- * readable numbers XS
+ * Readable numbers XS
  *
  * 10000           = 10K
  * 1000000         = 1M
@@ -170,7 +170,7 @@ export function humanizeNumberXS(num, options) {
 
 /*
  *
- * readable numbers SM
+ * Readable numbers SM
  *
  * 10000           = 10 тыс.
  * 1000000         = 1 млн
@@ -189,7 +189,7 @@ export function humanizeNumberSM(num, options) {
 
 /*
  *
- * readable numbers MD
+ * Readable numbers MD
  *
  * 0.000001        = 0.000001
  * 0.01            = 0.01
@@ -278,7 +278,7 @@ export function humanizeNumber(num) {
 
 /*
  *
- * humanize with custom format
+ * Humanizes a number with a custom format
  *
  */
 export function humanizeWithFormat(num) {
@@ -329,7 +329,7 @@ export function humanizeAlphabet(num) {
 
 /*
  *
- * textToNumbers
+ * Converts text to numbers
  *
  * 10 тысяч            = 10000
  * 1 миллион           = 1000000
@@ -409,7 +409,7 @@ export function isTextMeansThisRank(text, rank, locale) {
 }
 function getUnitLabelAbbrCount(text, rank) {
   if (rank.abbr.length === 1 && text.split('').every(function (_char) {
-    return _char === rank.abbr;
+    return _char === rank.abbr.toLowerCase();
   })) {
     return text.split('').length;
   }
@@ -418,7 +418,7 @@ function getUnitLabelAbbrCount(text, rank) {
 
 /*
  *
- * connect numbers with a dash
+ * Connects numbers with a dash
  *
  * dashNumbers([1, 2, 3, 4, 5, 8, 31, 23]) === '1-5, 8, 23, 31'
  *

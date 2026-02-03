@@ -225,6 +225,7 @@ test('round', function () {
 });
 describe('textToNumbers', function () {
   it('abbr', function () {
+    setGlobalLocale('en');
     expect(textToNumbers('1K')).toEqual({
       numbers: [1000],
       textWithoutNumbers: ''
@@ -242,7 +243,34 @@ describe('textToNumbers', function () {
       textWithoutNumbers: ''
     });
   });
+  it('multiple abbr', function () {
+    expect(textToNumbers('1KK')).toEqual({
+      numbers: [1e6],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1KKK')).toEqual({
+      numbers: [1e9],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1MM')).toEqual({
+      numbers: [1e12],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1TT')).toEqual({
+      numbers: [1e24],
+      textWithoutNumbers: ''
+    });
+    expect(textToNumbers('1 million million')).toEqual({
+      numbers: [1e6],
+      textWithoutNumbers: ' million'
+    });
+    expect(textToNumbers('1 million 1 million')).toEqual({
+      numbers: [1e6, 1e6],
+      textWithoutNumbers: ' '
+    });
+  });
   it('abbr ru', function () {
+    setGlobalLocale('ru');
     expect(textToNumbers('1К')).toEqual({
       numbers: [1000],
       textWithoutNumbers: ''

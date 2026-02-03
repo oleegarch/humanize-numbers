@@ -229,12 +229,22 @@ test('round', () => {
 })
 describe('textToNumbers', () => {
 	it('abbr', () => {
+		setGlobalLocale('en')
 		expect(textToNumbers('1K')).toEqual({ numbers: [1000], textWithoutNumbers: '' })
 		expect(textToNumbers('1M')).toEqual({ numbers: [1000000], textWithoutNumbers: '' })
 		expect(textToNumbers('1B')).toEqual({ numbers: [1000000000], textWithoutNumbers: '' })
 		expect(textToNumbers('1T')).toEqual({ numbers: [1000000000000], textWithoutNumbers: '' })
 	})
+	it('multiple abbr', () => {
+		expect(textToNumbers('1KK')).toEqual({ numbers: [1e6], textWithoutNumbers: '' })
+		expect(textToNumbers('1KKK')).toEqual({ numbers: [1e9], textWithoutNumbers: '' })
+		expect(textToNumbers('1MM')).toEqual({ numbers: [1e12], textWithoutNumbers: '' })
+		expect(textToNumbers('1TT')).toEqual({ numbers: [1e24], textWithoutNumbers: '' })
+		expect(textToNumbers('1 million million')).toEqual({ numbers: [1e6], textWithoutNumbers: ' million' })
+		expect(textToNumbers('1 million 1 million')).toEqual({ numbers: [1e6, 1e6], textWithoutNumbers: ' ' })
+	})
 	it('abbr ru', () => {
+		setGlobalLocale('ru')
 		expect(textToNumbers('1К')).toEqual({ numbers: [1000], textWithoutNumbers: '' })
 		expect(textToNumbers('1М')).toEqual({ numbers: [1000000], textWithoutNumbers: '' })
 		expect(textToNumbers('1B')).toEqual({ numbers: [1000000000], textWithoutNumbers: '' })
