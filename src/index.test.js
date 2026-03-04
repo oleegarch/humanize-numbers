@@ -209,9 +209,7 @@ test('countUnits', () => {
 })
 test('dashNumbers', () => {
 	expect(dashNumbers([1, 2, 3, 4, 5, 100, 200, 201, 202, 203])).toBe('1-5, 100, 200-203')
-	expect(dashNumbers([1, 2, 3, 4, 5, 100, 200, 201, 202, 203], ' to ', ' and ')).toBe(
-		'1 to 5 and 100 and 200 to 203'
-	)
+	expect(dashNumbers([1, 2, 3, 4, 5, 100, 200, 201, 202, 203], ' to ', ' and ')).toBe('1 to 5 and 100 and 200 to 203')
 })
 test('round', () => {
 	expect(round(1.55)).toBe(2)
@@ -260,29 +258,18 @@ describe('textToNumbers', () => {
 		expect(textToNumbers('1 миллион')).toEqual({ numbers: [1000000], textWithoutNumbers: '' })
 		expect(textToNumbers('1.1 млн')).toEqual({ numbers: [1100000], textWithoutNumbers: '' })
 		expect(textToNumbers('1.11 млн')).toEqual({ numbers: [1110000], textWithoutNumbers: '' })
-		expect(textToNumbers('1.23 млрд')).toEqual({
-			numbers: [1230000000],
-			textWithoutNumbers: '',
-		})
-		expect(textToNumbers('1.23 трлн')).toEqual({
-			numbers: [1230000000000],
-			textWithoutNumbers: '',
-		})
-		expect(textToNumbers('1.22 квадриллиона')).toEqual({
-			numbers: [1.22e15],
-			textWithoutNumbers: '',
-		})
-		expect(textToNumbers('1.22 квинтиллионов')).toEqual({
-			numbers: [1.22e18],
-			textWithoutNumbers: '',
-		})
-		expect(textToNumbers('1.22 секстиллионов')).toEqual({
-			numbers: [1.22e21],
-			textWithoutNumbers: '',
-		})
-		expect(textToNumbers('1000, 2000, 10 тысяч')).toEqual({
-			numbers: [1000, 2000, 10000],
-			textWithoutNumbers: ', , ',
-		})
+		expect(textToNumbers('1.23 млрд')).toEqual({ numbers: [1230000000], textWithoutNumbers: '' })
+		expect(textToNumbers('1.23 трлн')).toEqual({ numbers: [1230000000000], textWithoutNumbers: '' })
+		expect(textToNumbers('1.22 квадриллиона')).toEqual({ numbers: [1.22e15], textWithoutNumbers: '' })
+		expect(textToNumbers('1.22 квинтиллионов')).toEqual({ numbers: [1.22e18], textWithoutNumbers: '' })
+		expect(textToNumbers('1.22 секстиллионов')).toEqual({ numbers: [1.22e21], textWithoutNumbers: '' })
+		expect(textToNumbers('666e+6')).toEqual({ numbers: [666000000], textWithoutNumbers: '' })
+		expect(textToNumbers('1e+21')).toEqual({ numbers: [1e+21], textWithoutNumbers: '' })
+		expect(textToNumbers('1.001e21')).toEqual({ numbers: [1.001e+21], textWithoutNumbers: '' })
+		expect(textToNumbers('-1.001e21')).toEqual({ numbers: [-1.001e+21], textWithoutNumbers: '' })
+		expect(textToNumbers('-1.077701e21')).toEqual({ numbers: [-1.077701e+21], textWithoutNumbers: '' })
+		expect(textToNumbers('1e-21')).toEqual({ numbers: [1e-21], textWithoutNumbers: '' })
+		expect(textToNumbers('1e21')).toEqual({ numbers: [1e+21], textWithoutNumbers: '' })
+		expect(textToNumbers('1000, 2000, 10 тысяч')).toEqual({ numbers: [1000, 2000, 10000], textWithoutNumbers: ', , ' })
 	})
 })

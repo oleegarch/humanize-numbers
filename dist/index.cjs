@@ -386,7 +386,7 @@ function humanizeAlphabet(num) {
  * 1.22 секстиллиона   = 1.22e21
  *
  */
-var numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[ёа-яa-z]+)?/gi;
+var numbersRegexp = /(-?(?:\d+(?:\.\d+)?(?:e[+\-]?\d+)?))((?:\s+)?[ёа-яa-z]+)?/gi;
 var removeNonLettersSymbols = function removeNonLettersSymbols(t) {
   return t.replace(/[\.,:;\(\)]/g, '');
 };

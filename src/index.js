@@ -341,7 +341,7 @@ export function humanizeAlphabet(num, upper = false) {
  * 1.22 секстиллиона   = 1.22e21
  *
  */
-const numbersRegexp = /(-?(?:\d+\.\d+|\d+))((?:\s+)?[ёа-яa-z]+)?/gi
+const numbersRegexp = /(-?(?:\d+(?:\.\d+)?(?:e[+\-]?\d+)?))((?:\s+)?[ёа-яa-z]+)?/gi
 const removeNonLettersSymbols = (t) => t.replace(/[\.,:;\(\)]/g, '')
 
 export function textToNumbers(text, options = {}) {

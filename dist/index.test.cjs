@@ -329,6 +329,34 @@ var _index = require("./index.js");
       numbers: [1.22e21],
       textWithoutNumbers: ''
     });
+    (0, _vitest.expect)((0, _index.textToNumbers)('666e+6')).toEqual({
+      numbers: [666000000],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1e+21')).toEqual({
+      numbers: [1e+21],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1.001e21')).toEqual({
+      numbers: [1.001e+21],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('-1.001e21')).toEqual({
+      numbers: [-1.001e+21],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('-1.077701e21')).toEqual({
+      numbers: [-1.077701e+21],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1e-21')).toEqual({
+      numbers: [1e-21],
+      textWithoutNumbers: ''
+    });
+    (0, _vitest.expect)((0, _index.textToNumbers)('1e21')).toEqual({
+      numbers: [1e+21],
+      textWithoutNumbers: ''
+    });
     (0, _vitest.expect)((0, _index.textToNumbers)('1000, 2000, 10 тысяч')).toEqual({
       numbers: [1000, 2000, 10000],
       textWithoutNumbers: ', , '
