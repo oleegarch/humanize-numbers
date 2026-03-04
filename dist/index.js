@@ -8,6 +8,7 @@ function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" !=
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 import * as makePlural from 'make-plural';
 import { ranks, getRankProperty } from './ranks.js';
+export { ranks, getRankProperty };
 var locale = 'en';
 export function setGlobalLocale(newLocale) {
   locale = newLocale;

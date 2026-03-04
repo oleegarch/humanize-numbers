@@ -1,5 +1,6 @@
 import * as makePlural from 'make-plural'
 import { ranks, getRankProperty } from './ranks.js'
+export { ranks, getRankProperty }
 
 let locale = 'en'
 export function setGlobalLocale(newLocale) {

@@ -34,7 +34,6 @@ export var ranks = [{
   abbr: 'B',
   locales: {
     ru: {
-      abbr: 'B',
       abbreviation: 'млрд',
       unitName: 'миллиард'
     }
@@ -56,7 +55,6 @@ export var ranks = [{
   abbr: 'Qa',
   locales: {
     ru: {
-      abbreviation: 'Qa',
       unitName: 'квадриллион'
     }
   }
@@ -66,7 +64,6 @@ export var ranks = [{
   abbr: 'Qi',
   locales: {
     ru: {
-      abbreviation: 'Qi',
       unitName: 'квинтиллион'
     }
   }
@@ -76,7 +73,6 @@ export var ranks = [{
   abbr: 'Sx',
   locales: {
     ru: {
-      abbreviation: 'Sx',
       unitName: 'секстиллион'
     }
   }
@@ -86,7 +82,6 @@ export var ranks = [{
   abbr: 'Sp',
   locales: {
     ru: {
-      abbreviation: 'Sp',
       unitName: 'септиллион'
     }
   }
@@ -96,7 +91,6 @@ export var ranks = [{
   abbr: 'Oc',
   locales: {
     ru: {
-      abbreviation: 'Oc',
       unitName: 'октиллион'
     }
   }
@@ -106,7 +100,6 @@ export var ranks = [{
   abbr: 'No',
   locales: {
     ru: {
-      abbreviation: 'No',
       unitName: 'нониллион'
     }
   }
@@ -116,7 +109,6 @@ export var ranks = [{
   abbr: 'Dc',
   locales: {
     ru: {
-      abbreviation: 'Dc',
       unitName: 'дециллион'
     }
   }
@@ -126,7 +118,6 @@ export var ranks = [{
   abbr: 'Und',
   locales: {
     ru: {
-      abbreviation: 'Und',
       unitName: 'ундециллион'
     }
   }
@@ -136,7 +127,6 @@ export var ranks = [{
   abbr: 'Dud',
   locales: {
     ru: {
-      abbreviation: 'Dud',
       unitName: 'дуодециллион'
     }
   }
@@ -146,7 +136,6 @@ export var ranks = [{
   abbr: 'Trd',
   locales: {
     ru: {
-      abbreviation: 'Trd',
       unitName: 'тредециллион'
     }
   }
@@ -156,7 +145,6 @@ export var ranks = [{
   abbr: 'Qud',
   locales: {
     ru: {
-      abbreviation: 'Qud',
       unitName: 'кватуордециллион'
     }
   }
@@ -166,7 +154,6 @@ export var ranks = [{
   abbr: 'Qid',
   locales: {
     ru: {
-      abbreviation: 'Qid',
       unitName: 'квиндециллион'
     }
   }
@@ -176,7 +163,6 @@ export var ranks = [{
   abbr: 'Sed',
   locales: {
     ru: {
-      abbreviation: 'Sed',
       unitName: 'сексдециллион'
     }
   }
@@ -186,7 +172,6 @@ export var ranks = [{
   abbr: 'Spd',
   locales: {
     ru: {
-      abbreviation: 'Spd',
       unitName: 'септендециллион'
     }
   }
@@ -196,7 +181,6 @@ export var ranks = [{
   abbr: 'Ocd',
   locales: {
     ru: {
-      abbreviation: 'Ocd',
       unitName: 'октодециллион'
     }
   }
@@ -206,7 +190,6 @@ export var ranks = [{
   abbr: 'Nod',
   locales: {
     ru: {
-      abbreviation: 'Nod',
       unitName: 'новемдециллион'
     }
   }
@@ -216,7 +199,6 @@ export var ranks = [{
   abbr: 'Vig',
   locales: {
     ru: {
-      abbreviation: 'Vig',
       unitName: 'вигинтиллион'
     }
   }

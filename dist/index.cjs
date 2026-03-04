@@ -15,6 +15,12 @@ exports.dashNumbers = dashNumbers;
 exports.floor = floor;
 exports.fract = fract;
 exports.fullyReadableNumber = fullyReadableNumber;
+Object.defineProperty(exports, "getRankProperty", {
+  enumerable: true,
+  get: function get() {
+    return _ranks.getRankProperty;
+  }
+});
 exports.humanizeAbbr = humanizeAbbr;
 exports.humanizeAlphabet = humanizeAlphabet;
 exports.humanizeNumber = humanizeNumber;
@@ -24,6 +30,12 @@ exports.humanizeNumberXS = humanizeNumberXS;
 exports.humanizeWithFormat = humanizeWithFormat;
 exports.isTextMeansThisRank = isTextMeansThisRank;
 exports.lerp = lerp;
+Object.defineProperty(exports, "ranks", {
+  enumerable: true,
+  get: function get() {
+    return _ranks.ranks;
+  }
+});
 exports.round = round;
 exports.setGlobalLocale = setGlobalLocale;
 exports.textToNumbers = textToNumbers;
