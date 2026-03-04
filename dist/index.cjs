@@ -77,7 +77,9 @@ function fract(num) {
 // 1000 = 3
 // 1000000 = 6
 function countUnits(num) {
-  return Math.max(String(Math.floor(Math.abs(num))).length - 1, 0);
+  var posInt = Math.floor(Math.abs(num));
+  var numStr = String(avoidExponentialNotation(posInt));
+  return Math.max(numStr.length - 1, 0);
 }
 
 /*
