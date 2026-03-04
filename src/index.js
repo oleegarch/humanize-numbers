@@ -29,7 +29,9 @@ export function fract(num) {
 // 1000 = 3
 // 1000000 = 6
 export function countUnits(num) {
-	return Math.max(String(Math.floor(Math.abs(num))).length - 1, 0)
+	const posInt = Math.floor(Math.abs(num))
+	const numStr = String(avoidExponentialNotation(posInt))
+	return Math.max(numStr.length - 1, 0)
 }
 
 /*
