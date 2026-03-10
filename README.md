@@ -62,7 +62,7 @@ humanizeNumberXS(1000000) // '1М'
 humanizeNumberXS(1234567890123) // '1.2Т'
 ```
 
-Options used in tests:
+Options used:
 
 ```js
 // force unit
@@ -98,11 +98,9 @@ humanizeNumber(1e9, 'md', { humanizeFrom: 1e12, fullyReadable: true, fullyReadab
 // global options
 setGlobalHumanizeOptions('locale', 'ru')
 humanizeNumber(1e9, 'md') // '1 миллиард'
-setGlobalHumanizeOptions('locale', 'en')
 
 setGlobalHumanizeOptions('exponentialFrom', 1e9)
 humanizeNumber(1e9, 'md') // '1e9'
-setGlobalHumanizeOptions('exponentialFrom', false)
 
 // maxRanks
 humanizeNumber(1e15, 'md', { maxRanks: 4 }) // '1000 trillion'
@@ -128,11 +126,9 @@ humanizeAbbr(1e12) // '1T'
 humanizeAbbr(1e15) // '1TK'
 humanizeAbbr(1e303) // '1TTTTTTTTTTTTTTTTTTTTTTTTTK'
 
-for (let i = 0; i < alphabet.length; i++) {
-  const letter = alphabet[i].letter
-  humanizeAlphabet(Math.pow(1000, i + 1)) // `1${letter}`
-}
-
+humanizeAlphabet(1000) // '1a'
+humanizeAlphabet(1000000) // '1b'
+humanizeAlphabet(1000000000) // '1c'
 humanizeAlphabet(1e303) // '1zzzw'
 
 const rusAlphabet = 'а,б,в,г,д,е,ё,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я'.split(',')
@@ -191,11 +187,13 @@ import { setGlobalLocale, textToNumbers } from 'humanize-numbers'
 
 setGlobalLocale('en')
 textToNumbers('1K') // { numbers: [1000], textWithoutNumbers: '' }
+textToNumbers('1 thousand') // { numbers: [1000], textWithoutNumbers: '' }
 textToNumbers('1KK') // { numbers: [1e6], textWithoutNumbers: '' }
 textToNumbers('1TT') // { numbers: [1e24], textWithoutNumbers: '' }
 
 setGlobalLocale('ru')
 textToNumbers('1К') // { numbers: [1000], textWithoutNumbers: '' }
+textToNumbers('1 тысяча') // { numbers: [1000], textWithoutNumbers: '' }
 textToNumbers('1М') // { numbers: [1000000], textWithoutNumbers: '' }
 textToNumbers('1Т') // { numbers: [1000000000000], textWithoutNumbers: '' }
 
