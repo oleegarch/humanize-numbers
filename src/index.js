@@ -2,9 +2,19 @@ import * as makePlural from 'make-plural'
 import { ranks, getRankProperty } from './ranks.js'
 export { ranks, getRankProperty }
 
+/* Global settings */
 let locale = 'en'
+let humanizeOptions = {}
 export function setGlobalLocale(newLocale) {
 	locale = newLocale
+}
+export function setGlobalHumanizeOptions(field, value) {
+	if (field != null && value != null) {
+		humanizeOptions[field] = value
+	}
+	else {
+		humanizeOptions = field
+	}
 }
 
 /* Calculates a number between two numbers at a specific increment */
@@ -47,21 +57,17 @@ export function countUnits(num) {
  *
  */
 export function round(num, fractionCount = 0, functionName = 'round') {
-	if (num === 0) {
-		return num
-	}
+	if (num === 0) return num
 
 	const func = Math[functionName]
-
-	if (fractionCount === 0) {
-		return func(num)
-	}
+	if (fractionCount === 0) return func(num)
 
 	let unit = 10 ** Math.abs(fractionCount)
 
 	if (fractionCount > 0) {
 		return func(num * unit) / unit
-	} else {
+	}
+	else {
 		if (Math.abs(num) < unit) {
 			unit = 10 ** countUnits(num)
 		}
@@ -130,6 +136,39 @@ export function avoidExponentialNotation(x) {
 }
 
 /*
+ * Convert to exponential notation
+ * 1000 = 1e3
+ * 1000000 = 1e6
+ * 1000000000 = 1e9
+ * 1000000000000 = 1e12
+ * 1000000000000000 = 1e15
+ * 1000000000000000000 = 1e18
+ * 1000000000000000000000 = 1e21
+ * Infinity = Infinity
+ */
+export function toExponentialNotation(
+	num,
+	fractionCount = 0,
+	{
+		plusSign = false,
+		padZeros = false
+	} = {}
+) {
+	if (!Number.isFinite(num)) return num.toString()
+
+	let exponentialNotation = num.toExponential(fractionCount)
+	if (!padZeros) {
+		exponentialNotation = exponentialNotation.replace(/(\.\d*?)0+e/i, '$1e')
+		exponentialNotation = exponentialNotation.replace(/\.e/i, 'e')
+	}
+
+	if(plusSign === false)
+		exponentialNotation = exponentialNotation.replace('+', '')
+
+	return exponentialNotation
+}
+
+/*
  *
  * Divides a number into a readable format
  *
@@ -159,6 +198,8 @@ export function fullyReadableNumber(num, separator = ' ') {
  * 1.222e15        = 1.2 Qa
  * 1.222e18 + 2    = 1.2 Qi
  * 1.222e21 + 2    = 1.2 Sx
+ * NaN             = 0
+ * Infinity        = Infinity
  *
  */
 export function humanizeNumberXS(num, options) {
@@ -178,6 +219,8 @@ export function humanizeNumberXS(num, options) {
  * 1.222e15        = 1.22 Qa
  * 1.222e18 + 2    = 1.22 Qi
  * 1.222e21 + 2    = 1.22 Sx
+ * NaN             = 0
+ * Infinity        = Infinity
  *
  */
 export function humanizeNumberSM(num, options) {
@@ -200,130 +243,192 @@ export function humanizeNumberSM(num, options) {
  * 1.222e15        = 1.22 квадриллион
  * 1.222e18 + 2    = 1.22 квинтиллион
  * 1.222e21 + 2    = 1.22 секстиллион
+ * NaN             = 0
+ * Infinity        = Infinity
  *
  */
 export function humanizeNumberMD(num, options) {
 	return humanizeNumber(num, 'md', options)
 }
-export function humanizeNumber(num, size = 'md', options = {}) {
-	if (Number.isNaN(Number(num))) {
-		return '0'
+export function humanizeNumber(
+	num,
+	size = 'md',
+	options = {}
+) {
+	if (Number.isNaN(Number(num))) return '0'
+	if (!Number.isFinite(num)) return num.toString()
+
+	const {
+		locale: optionsLocale,
+		separator: optionsSeparator,
+		maxRanks = true,
+		format = typeof maxRanks === 'number' ? ranks.slice(0, maxRanks) : ranks,
+		exponentialFrom = size === 'md' ? false : 1e15,
+		exponentialOptions = { plusSign: false, padZeros: false },
+		fractionCount = size === 'xs' ? 1 : 2,
+		padZeros = false,
+		functionName = 'round',
+		humanizeFrom = 1e3,
+		repeatableAbbr = false,
+		withUnit = null,
+		fullyReadable = true,
+		fullyReadableSeparator = ' '
+	} = {
+		...options,
+		...humanizeOptions
 	}
-	if (!Number.isFinite(num)) {
+
+	const currentLocale = optionsLocale ?? locale
+	const absNum = Math.abs(num)
+	if (exponentialFrom !== false && absNum >= exponentialFrom) {
+		return toExponentialNotation(num, fractionCount, exponentialOptions)
+	}
+
+	const getReadableFallback = () => {
+		if (fullyReadable) return fullyReadableNumber(num, fullyReadableSeparator)
 		return num.toString()
 	}
+	const getRankLabel = (rank, unitsValue) => {
+		const unitNameValue = getRankProperty(rank, currentLocale, 'unitName')
+		const abbreviationValue = getRankProperty(rank, currentLocale, 'abbreviation')
+		const abbrValue = getRankProperty(rank, currentLocale, 'abbr')
 
-	const currentLocale = options.locale ?? locale
-	const absNum = Math.abs(num)
+		let unitName = unitNameValue
+		if (typeof unitName === 'object' && unitName != null) {
+			unitName = unitName[makePlural[currentLocale](unitsValue)]
+		}
 
-	let rank = options.withUnit ? ranks.find((r) => r.unit === options.withUnit) : null
-	let fractionCount = options.fractionCount ?? (size === 'xs' ? 1 : 2)
-
-	if (!rank) {
-		for (const currentRank of ranks) {
-			if (currentRank.unit <= absNum) {
-				rank = currentRank
-			} else {
+		if (size === 'xs') return abbrValue ?? unitName
+		if (size === 'sm') return abbreviationValue ?? abbrValue ?? unitName
+		return unitName
+	}
+	const findLargestRankByValue = (value, epsilonMultiplier = 1) => {
+		let foundRank = null
+		const valueWithEpsilon = Math.abs(value) * epsilonMultiplier
+		for (const currentRank of format) {
+			if (currentRank.unit <= valueWithEpsilon) {
+				foundRank = currentRank
+			}
+			else {
 				break
 			}
 		}
+		return foundRank
 	}
 
-	if (!rank) {
-		return num.toString()
+	let dividedUnits
+	const labels = []
+
+	if (repeatableAbbr) {
+		const repeatableThreshold = 1e3
+		const repeatableEpsilon = 1e-6
+		const floatingPointEpsilonMultiplier = 1 + Number.EPSILON * 10
+		dividedUnits = num
+
+		if (withUnit != null) {
+			const fixedRank = format.find((r) => r.unit === withUnit)
+			if (fixedRank == null) return getReadableFallback()
+
+			const fixedLabel = getRankLabel(fixedRank, dividedUnits / fixedRank.unit)
+			while (Math.abs(dividedUnits) + repeatableEpsilon >= fixedRank.unit) {
+				labels.push(fixedLabel)
+				dividedUnits /= fixedRank.unit
+			}
+		}
+		else {
+			if (humanizeFrom === false || absNum < humanizeFrom) return getReadableFallback()
+
+			while (Math.abs(dividedUnits) + repeatableEpsilon >= repeatableThreshold) {
+				const nextRank = findLargestRankByValue(dividedUnits, floatingPointEpsilonMultiplier)
+				if (nextRank == null) break
+
+				labels.push(getRankLabel(nextRank, dividedUnits / nextRank.unit))
+				dividedUnits /= nextRank.unit
+			}
+		}
+	}
+	else {
+		let rank = withUnit
+			? format.find((r) => r.unit === withUnit)
+			: null
+		if (rank == null && humanizeFrom !== false && absNum >= humanizeFrom) {
+			rank = findLargestRankByValue(absNum)
+		}
+		if (rank == null) return getReadableFallback()
+
+		const unitLabel = getRankLabel(rank, num / rank.unit)
+		dividedUnits = num / rank.unit
+
+		while (Math.abs(dividedUnits) >= rank.unit) {
+			labels.push(unitLabel)
+			dividedUnits /= rank.unit
+		}
+		labels.unshift(unitLabel)
 	}
 
-	let readable = ''
+	if (labels.length === 0) return getReadableFallback()
 
-	const units = num / rank.unit
-	const unitNameValue = getRankProperty(rank, currentLocale, 'unitName')
-	const abbreviationValue = getRankProperty(rank, currentLocale, 'abbreviation')
-	const abbrValue = getRankProperty(rank, currentLocale, 'abbr')
+	const separator = optionsSeparator ?? (labels[0].length === 1 ? '' : ' ')
+	let rounded = round(dividedUnits, fractionCount, functionName)
+	if(padZeros) rounded = rounded.toFixed(fractionCount)
 
-	let unitName = unitNameValue
-	if (typeof unitName === 'object' && unitName != null) {
-		unitName = unitName[makePlural[currentLocale](units)]
-	}
-
-	let unitLabel = unitName
-
-	if (size === 'xs') {
-		unitLabel = abbrValue ?? unitName
-	}
-	if (size === 'sm') {
-		unitLabel = abbreviationValue ?? abbrValue ?? unitName
-	}
-
-	let dividedUnits = units
-	let dividedUnitLabel = unitLabel
-	let separator = options.separator ?? (dividedUnitLabel.length === 1 ? '' : ' ')
-
-	while (dividedUnits >= rank.unit) {
-		dividedUnitLabel += separator + unitLabel
-		dividedUnits /= rank.unit
-	}
-
-	let rounded = round(dividedUnits, fractionCount, options.functionName)
-	if(options.zeros) rounded = rounded.toFixed(fractionCount)
-		
-	readable += rounded
-	readable += separator + dividedUnitLabel
-
-	return readable
+	return rounded + separator + labels.join(separator)
 }
 
 /*
  *
- * Humanizes a number with a custom format
+ * Humanizes a number with only abbreviation format (1000T instead of 1 quadrillion)
+ * 1000 = 1 thousand
+ * 1000000 = 1 million
+ * 1000000000 = 1 billion
+ * 1000000000000 = 1 trillion
+ * 1000000000000000 = 1000 trillion
+ * 1000000000000000000 = 1000000 trillion
  *
  */
-export function humanizeWithFormat(
-	num,
-	{
-		format = ['K', 'M', 'B', 'T'],
-		divider = 1e3,
-		fractionCount = 0,
-		separator = '',
-		formatSeparator = '',
-		roundFunctionName = 'floor',
-	} = {}
-) {
-	if (Number.isNaN(Number(num))) return '0'
-
-	let readable = ''
-	let dividedNum = num
-
-	for (let index = format.length - 1; index >= 0; index--) {
-		const formatLabel = format[index]
-		const divideTo = divider ** (index + 1)
-		let divided = round(dividedNum / divideTo)
-		while (divided >= 1) {
-			readable += formatSeparator + formatLabel
-			dividedNum = round(dividedNum / divideTo)
-			divided = round(dividedNum / divideTo)
-		}
-	}
-
-	readable = round(dividedNum, fractionCount, roundFunctionName) + separator + readable
-
-	return readable
-}
-export function humanizeAbbr(num) {
-	return humanizeWithFormat(num)
+export function humanizeAbbr(num, { maxRanks = 4, ...options } = {}) {
+	return humanizeNumber(num, 'xs', {
+		repeatableAbbr: true,
+		maxRanks,
+		...options
+	})
 }
 
+/*
+ *
+ * Creates a custom humanize format
+ * Receives an array of letters and returns an array of rank objects:
+ *
+ */
+export function createHumanizeFormat(format) {
+	return format.map((letter, index) => ({
+		letter,
+		unit: 1000 ** (index + 1),
+		abbr: letter,
+		unitName: letter,
+	}))
+}
+
+/*
+ *
+ * Humanizes a number with alphabet format
+ * 1000 = 1a
+ * 1000000 = 1b
+ * 1000000000 = 1c
+ * 1000000000000 = 1d
+ * 1000000000000000 = 1e
+ * 1000000000000000000 = 1f
+ *
+ */
 export const alphabetString = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z'
-export const alphabet = alphabetString.split(',')
-export function humanizeAlphabet(num, upper = false) {
-	let options = {}
-	let replaceAlphabet
-	if (upper) {
-		replaceAlphabet = alphabetString.toUpperCase().split(',')
-	}
-
-	options.format = replaceAlphabet ?? alphabet
-
-	return humanizeWithFormat(num, options)
+export const alphabetArray = alphabetString.split(',')
+export const alphabet = createHumanizeFormat(alphabetArray)
+export function humanizeAlphabet(num, options = {}) {
+	return humanizeNumber(num, 'xs', {
+		repeatableAbbr: true,
+		format: alphabet,
+		...options
+	})
 }
 
 /*

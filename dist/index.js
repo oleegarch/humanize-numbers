@@ -1,5 +1,13 @@
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+var _excluded = ["maxRanks"];
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t["return"] || t["return"](); } finally { if (u) throw o; } } }; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -9,9 +17,19 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 import * as makePlural from 'make-plural';
 import { ranks, getRankProperty } from './ranks.js';
 export { ranks, getRankProperty };
+
+/* Global settings */
 var locale = 'en';
+var humanizeOptions = {};
 export function setGlobalLocale(newLocale) {
   locale = newLocale;
+}
+export function setGlobalHumanizeOptions(field, value) {
+  if (field != null && value != null) {
+    humanizeOptions[field] = value;
+  } else {
+    humanizeOptions = field;
+  }
 }
 
 /* Calculates a number between two numbers at a specific increment */
@@ -56,13 +74,9 @@ export function countUnits(num) {
 export function round(num) {
   var fractionCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
   var functionName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 'round';
-  if (num === 0) {
-    return num;
-  }
+  if (num === 0) return num;
   var func = Math[functionName];
-  if (fractionCount === 0) {
-    return func(num);
-  }
+  if (fractionCount === 0) return func(num);
   var unit = Math.pow(10, Math.abs(fractionCount));
   if (fractionCount > 0) {
     return func(num * unit) / unit;
@@ -134,6 +148,34 @@ export function avoidExponentialNotation(x) {
 }
 
 /*
+ * Convert to exponential notation
+ * 1000 = 1e3
+ * 1000000 = 1e6
+ * 1000000000 = 1e9
+ * 1000000000000 = 1e12
+ * 1000000000000000 = 1e15
+ * 1000000000000000000 = 1e18
+ * 1000000000000000000000 = 1e21
+ * Infinity = Infinity
+ */
+export function toExponentialNotation(num) {
+  var fractionCount = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+    _ref$plusSign = _ref.plusSign,
+    plusSign = _ref$plusSign === void 0 ? false : _ref$plusSign,
+    _ref$padZeros = _ref.padZeros,
+    padZeros = _ref$padZeros === void 0 ? false : _ref$padZeros;
+  if (!Number.isFinite(num)) return num.toString();
+  var exponentialNotation = num.toExponential(fractionCount);
+  if (!padZeros) {
+    exponentialNotation = exponentialNotation.replace(/(\.\d*?)0+e/i, '$1e');
+    exponentialNotation = exponentialNotation.replace(/\.e/i, 'e');
+  }
+  if (plusSign === false) exponentialNotation = exponentialNotation.replace('+', '');
+  return exponentialNotation;
+}
+
+/*
  *
  * Divides a number into a readable format
  *
@@ -165,6 +207,8 @@ export function fullyReadableNumber(num) {
  * 1.222e15        = 1.2 Qa
  * 1.222e18 + 2    = 1.2 Qi
  * 1.222e21 + 2    = 1.2 Sx
+ * NaN             = 0
+ * Infinity        = Infinity
  *
  */
 export function humanizeNumberXS(num, options) {
@@ -184,6 +228,8 @@ export function humanizeNumberXS(num, options) {
  * 1.222e15        = 1.22 Qa
  * 1.222e18 + 2    = 1.22 Qi
  * 1.222e21 + 2    = 1.22 Sx
+ * NaN             = 0
+ * Infinity        = Infinity
  *
  */
 export function humanizeNumberSM(num, options) {
@@ -206,35 +252,81 @@ export function humanizeNumberSM(num, options) {
  * 1.222e15        = 1.22 квадриллион
  * 1.222e18 + 2    = 1.22 квинтиллион
  * 1.222e21 + 2    = 1.22 секстиллион
+ * NaN             = 0
+ * Infinity        = Infinity
  *
  */
 export function humanizeNumberMD(num, options) {
   return humanizeNumber(num, 'md', options);
 }
 export function humanizeNumber(num) {
-  var _options$locale, _options$fractionCoun, _options$separator;
   var size = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'md';
   var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  if (Number.isNaN(Number(num))) {
-    return '0';
-  }
-  if (!Number.isFinite(num)) {
-    return num.toString();
-  }
-  var currentLocale = (_options$locale = options.locale) !== null && _options$locale !== void 0 ? _options$locale : locale;
+  if (Number.isNaN(Number(num))) return '0';
+  if (!Number.isFinite(num)) return num.toString();
+  var _options$humanizeOpti = _objectSpread(_objectSpread({}, options), humanizeOptions),
+    optionsLocale = _options$humanizeOpti.locale,
+    optionsSeparator = _options$humanizeOpti.separator,
+    _options$humanizeOpti2 = _options$humanizeOpti.maxRanks,
+    maxRanks = _options$humanizeOpti2 === void 0 ? true : _options$humanizeOpti2,
+    _options$humanizeOpti3 = _options$humanizeOpti.format,
+    format = _options$humanizeOpti3 === void 0 ? typeof maxRanks === 'number' ? ranks.slice(0, maxRanks) : ranks : _options$humanizeOpti3,
+    _options$humanizeOpti4 = _options$humanizeOpti.exponentialFrom,
+    exponentialFrom = _options$humanizeOpti4 === void 0 ? size === 'md' ? false : 1e15 : _options$humanizeOpti4,
+    _options$humanizeOpti5 = _options$humanizeOpti.exponentialOptions,
+    exponentialOptions = _options$humanizeOpti5 === void 0 ? {
+      plusSign: false,
+      padZeros: false
+    } : _options$humanizeOpti5,
+    _options$humanizeOpti6 = _options$humanizeOpti.fractionCount,
+    fractionCount = _options$humanizeOpti6 === void 0 ? size === 'xs' ? 1 : 2 : _options$humanizeOpti6,
+    _options$humanizeOpti7 = _options$humanizeOpti.padZeros,
+    padZeros = _options$humanizeOpti7 === void 0 ? false : _options$humanizeOpti7,
+    _options$humanizeOpti8 = _options$humanizeOpti.functionName,
+    functionName = _options$humanizeOpti8 === void 0 ? 'round' : _options$humanizeOpti8,
+    _options$humanizeOpti9 = _options$humanizeOpti.humanizeFrom,
+    humanizeFrom = _options$humanizeOpti9 === void 0 ? 1e3 : _options$humanizeOpti9,
+    _options$humanizeOpti0 = _options$humanizeOpti.repeatableAbbr,
+    repeatableAbbr = _options$humanizeOpti0 === void 0 ? false : _options$humanizeOpti0,
+    _options$humanizeOpti1 = _options$humanizeOpti.withUnit,
+    withUnit = _options$humanizeOpti1 === void 0 ? null : _options$humanizeOpti1,
+    _options$humanizeOpti10 = _options$humanizeOpti.fullyReadable,
+    fullyReadable = _options$humanizeOpti10 === void 0 ? true : _options$humanizeOpti10,
+    _options$humanizeOpti11 = _options$humanizeOpti.fullyReadableSeparator,
+    fullyReadableSeparator = _options$humanizeOpti11 === void 0 ? ' ' : _options$humanizeOpti11;
+  var currentLocale = optionsLocale !== null && optionsLocale !== void 0 ? optionsLocale : locale;
   var absNum = Math.abs(num);
-  var rank = options.withUnit ? ranks.find(function (r) {
-    return r.unit === options.withUnit;
-  }) : null;
-  var fractionCount = (_options$fractionCoun = options.fractionCount) !== null && _options$fractionCoun !== void 0 ? _options$fractionCoun : size === 'xs' ? 1 : 2;
-  if (!rank) {
-    var _iterator = _createForOfIteratorHelper(ranks),
+  if (exponentialFrom !== false && absNum >= exponentialFrom) {
+    return toExponentialNotation(num, fractionCount, exponentialOptions);
+  }
+  var getReadableFallback = function getReadableFallback() {
+    if (fullyReadable) return fullyReadableNumber(num, fullyReadableSeparator);
+    return num.toString();
+  };
+  var getRankLabel = function getRankLabel(rank, unitsValue) {
+    var _ref2;
+    var unitNameValue = getRankProperty(rank, currentLocale, 'unitName');
+    var abbreviationValue = getRankProperty(rank, currentLocale, 'abbreviation');
+    var abbrValue = getRankProperty(rank, currentLocale, 'abbr');
+    var unitName = unitNameValue;
+    if (_typeof(unitName) === 'object' && unitName != null) {
+      unitName = unitName[makePlural[currentLocale](unitsValue)];
+    }
+    if (size === 'xs') return abbrValue !== null && abbrValue !== void 0 ? abbrValue : unitName;
+    if (size === 'sm') return (_ref2 = abbreviationValue !== null && abbreviationValue !== void 0 ? abbreviationValue : abbrValue) !== null && _ref2 !== void 0 ? _ref2 : unitName;
+    return unitName;
+  };
+  var findLargestRankByValue = function findLargestRankByValue(value) {
+    var epsilonMultiplier = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+    var foundRank = null;
+    var valueWithEpsilon = Math.abs(value) * epsilonMultiplier;
+    var _iterator = _createForOfIteratorHelper(format),
       _step;
     try {
       for (_iterator.s(); !(_step = _iterator.n()).done;) {
         var currentRank = _step.value;
-        if (currentRank.unit <= absNum) {
-          rank = currentRank;
+        if (currentRank.unit <= valueWithEpsilon) {
+          foundRank = currentRank;
         } else {
           break;
         }
@@ -244,90 +336,116 @@ export function humanizeNumber(num) {
     } finally {
       _iterator.f();
     }
+    return foundRank;
+  };
+  var dividedUnits;
+  var labels = [];
+  if (repeatableAbbr) {
+    var repeatableThreshold = 1e3;
+    var repeatableEpsilon = 1e-6;
+    var floatingPointEpsilonMultiplier = 1 + Number.EPSILON * 10;
+    dividedUnits = num;
+    if (withUnit != null) {
+      var fixedRank = format.find(function (r) {
+        return r.unit === withUnit;
+      });
+      if (fixedRank == null) return getReadableFallback();
+      var fixedLabel = getRankLabel(fixedRank, dividedUnits / fixedRank.unit);
+      while (Math.abs(dividedUnits) + repeatableEpsilon >= fixedRank.unit) {
+        labels.push(fixedLabel);
+        dividedUnits /= fixedRank.unit;
+      }
+    } else {
+      if (humanizeFrom === false || absNum < humanizeFrom) return getReadableFallback();
+      while (Math.abs(dividedUnits) + repeatableEpsilon >= repeatableThreshold) {
+        var nextRank = findLargestRankByValue(dividedUnits, floatingPointEpsilonMultiplier);
+        if (nextRank == null) break;
+        labels.push(getRankLabel(nextRank, dividedUnits / nextRank.unit));
+        dividedUnits /= nextRank.unit;
+      }
+    }
+  } else {
+    var rank = withUnit ? format.find(function (r) {
+      return r.unit === withUnit;
+    }) : null;
+    if (rank == null && humanizeFrom !== false && absNum >= humanizeFrom) {
+      rank = findLargestRankByValue(absNum);
+    }
+    if (rank == null) return getReadableFallback();
+    var unitLabel = getRankLabel(rank, num / rank.unit);
+    dividedUnits = num / rank.unit;
+    while (Math.abs(dividedUnits) >= rank.unit) {
+      labels.push(unitLabel);
+      dividedUnits /= rank.unit;
+    }
+    labels.unshift(unitLabel);
   }
-  if (!rank) {
-    return num.toString();
-  }
-  var readable = '';
-  var units = num / rank.unit;
-  var unitNameValue = getRankProperty(rank, currentLocale, 'unitName');
-  var abbreviationValue = getRankProperty(rank, currentLocale, 'abbreviation');
-  var abbrValue = getRankProperty(rank, currentLocale, 'abbr');
-  var unitName = unitNameValue;
-  if (_typeof(unitName) === 'object' && unitName != null) {
-    unitName = unitName[makePlural[currentLocale](units)];
-  }
-  var unitLabel = unitName;
-  if (size === 'xs') {
-    unitLabel = abbrValue !== null && abbrValue !== void 0 ? abbrValue : unitName;
-  }
-  if (size === 'sm') {
-    var _ref;
-    unitLabel = (_ref = abbreviationValue !== null && abbreviationValue !== void 0 ? abbreviationValue : abbrValue) !== null && _ref !== void 0 ? _ref : unitName;
-  }
-  var dividedUnits = units;
-  var dividedUnitLabel = unitLabel;
-  var separator = (_options$separator = options.separator) !== null && _options$separator !== void 0 ? _options$separator : dividedUnitLabel.length === 1 ? '' : ' ';
-  while (dividedUnits >= rank.unit) {
-    dividedUnitLabel += separator + unitLabel;
-    dividedUnits /= rank.unit;
-  }
-  var rounded = round(dividedUnits, fractionCount, options.functionName);
-  if (options.zeros) rounded = rounded.toFixed(fractionCount);
-  readable += rounded;
-  readable += separator + dividedUnitLabel;
-  return readable;
+  if (labels.length === 0) return getReadableFallback();
+  var separator = optionsSeparator !== null && optionsSeparator !== void 0 ? optionsSeparator : labels[0].length === 1 ? '' : ' ';
+  var rounded = round(dividedUnits, fractionCount, functionName);
+  if (padZeros) rounded = rounded.toFixed(fractionCount);
+  return rounded + separator + labels.join(separator);
 }
 
 /*
  *
- * Humanizes a number with a custom format
+ * Humanizes a number with only abbreviation format (1000T instead of 1 quadrillion)
+ * 1000 = 1 thousand
+ * 1000000 = 1 million
+ * 1000000000 = 1 billion
+ * 1000000000000 = 1 trillion
+ * 1000000000000000 = 1000 trillion
+ * 1000000000000000000 = 1000000 trillion
  *
  */
-export function humanizeWithFormat(num) {
-  var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-    _ref2$format = _ref2.format,
-    format = _ref2$format === void 0 ? ['K', 'M', 'B', 'T'] : _ref2$format,
-    _ref2$divider = _ref2.divider,
-    divider = _ref2$divider === void 0 ? 1e3 : _ref2$divider,
-    _ref2$fractionCount = _ref2.fractionCount,
-    fractionCount = _ref2$fractionCount === void 0 ? 0 : _ref2$fractionCount,
-    _ref2$separator = _ref2.separator,
-    separator = _ref2$separator === void 0 ? '' : _ref2$separator,
-    _ref2$formatSeparator = _ref2.formatSeparator,
-    formatSeparator = _ref2$formatSeparator === void 0 ? '' : _ref2$formatSeparator,
-    _ref2$roundFunctionNa = _ref2.roundFunctionName,
-    roundFunctionName = _ref2$roundFunctionNa === void 0 ? 'floor' : _ref2$roundFunctionNa;
-  if (Number.isNaN(Number(num))) return '0';
-  var readable = '';
-  var dividedNum = num;
-  for (var index = format.length - 1; index >= 0; index--) {
-    var formatLabel = format[index];
-    var divideTo = Math.pow(divider, index + 1);
-    var divided = round(dividedNum / divideTo);
-    while (divided >= 1) {
-      readable += formatSeparator + formatLabel;
-      dividedNum = round(dividedNum / divideTo);
-      divided = round(dividedNum / divideTo);
-    }
-  }
-  readable = round(dividedNum, fractionCount, roundFunctionName) + separator + readable;
-  return readable;
-}
 export function humanizeAbbr(num) {
-  return humanizeWithFormat(num);
+  var _ref3 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+    _ref3$maxRanks = _ref3.maxRanks,
+    maxRanks = _ref3$maxRanks === void 0 ? 4 : _ref3$maxRanks,
+    options = _objectWithoutProperties(_ref3, _excluded);
+  return humanizeNumber(num, 'xs', _objectSpread({
+    repeatableAbbr: true,
+    maxRanks: maxRanks
+  }, options));
 }
+
+/*
+ *
+ * Creates a custom humanize format
+ * Receives an array of letters and returns an array of rank objects:
+ *
+ */
+export function createHumanizeFormat(format) {
+  return format.map(function (letter, index) {
+    return {
+      letter: letter,
+      unit: Math.pow(1000, index + 1),
+      abbr: letter,
+      unitName: letter
+    };
+  });
+}
+
+/*
+ *
+ * Humanizes a number with alphabet format
+ * 1000 = 1a
+ * 1000000 = 1b
+ * 1000000000 = 1c
+ * 1000000000000 = 1d
+ * 1000000000000000 = 1e
+ * 1000000000000000000 = 1f
+ *
+ */
 export var alphabetString = 'a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z';
-export var alphabet = alphabetString.split(',');
+export var alphabetArray = alphabetString.split(',');
+export var alphabet = createHumanizeFormat(alphabetArray);
 export function humanizeAlphabet(num) {
-  var upper = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-  var options = {};
-  var replaceAlphabet;
-  if (upper) {
-    replaceAlphabet = alphabetString.toUpperCase().split(',');
-  }
-  options.format = replaceAlphabet !== null && replaceAlphabet !== void 0 ? replaceAlphabet : alphabet;
-  return humanizeWithFormat(num, options);
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  return humanizeNumber(num, 'xs', _objectSpread({
+    repeatableAbbr: true,
+    format: alphabet
+  }, options));
 }
 
 /*
@@ -350,10 +468,10 @@ var removeNonLettersSymbols = function removeNonLettersSymbols(t) {
   return t.replace(/[\.,:;\(\)]/g, '');
 };
 export function textToNumbers(text) {
-  var _options$locale2;
+  var _options$locale;
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var numbers = [];
-  var currentLocale = (_options$locale2 = options.locale) !== null && _options$locale2 !== void 0 ? _options$locale2 : locale;
+  var currentLocale = (_options$locale = options.locale) !== null && _options$locale !== void 0 ? _options$locale : locale;
   text = text.replace(numbersRegexp, function (allMatch, match1, match2) {
     var num = parseFloat(match1);
     var rank;

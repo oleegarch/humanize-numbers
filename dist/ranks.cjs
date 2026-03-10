@@ -113,7 +113,7 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e33,
   unitName: 'decillion',
-  abbr: 'Dc',
+  abbr: 'De',
   locales: {
     ru: {
       unitName: 'дециллион'
@@ -122,7 +122,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e36,
   unitName: 'undecillion',
-  abbr: 'Und',
   locales: {
     ru: {
       unitName: 'ундециллион'
@@ -131,7 +130,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e39,
   unitName: 'duodecillion',
-  abbr: 'Dud',
   locales: {
     ru: {
       unitName: 'дуодециллион'
@@ -140,7 +138,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e42,
   unitName: 'tredecillion',
-  abbr: 'Trd',
   locales: {
     ru: {
       unitName: 'тредециллион'
@@ -149,7 +146,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e45,
   unitName: 'quattuordecillion',
-  abbr: 'Qud',
   locales: {
     ru: {
       unitName: 'кватуордециллион'
@@ -158,7 +154,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e48,
   unitName: 'quindecillion',
-  abbr: 'Qid',
   locales: {
     ru: {
       unitName: 'квиндециллион'
@@ -167,7 +162,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e51,
   unitName: 'sexdecillion',
-  abbr: 'Sed',
   locales: {
     ru: {
       unitName: 'сексдециллион'
@@ -176,7 +170,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e54,
   unitName: 'septendecillion',
-  abbr: 'Spd',
   locales: {
     ru: {
       unitName: 'септендециллион'
@@ -185,7 +178,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e57,
   unitName: 'octodecillion',
-  abbr: 'Ocd',
   locales: {
     ru: {
       unitName: 'октодециллион'
@@ -194,7 +186,6 @@ var ranks = exports.ranks = [{
 }, {
   unit: 1e60,
   unitName: 'novemdecillion',
-  abbr: 'Nod',
   locales: {
     ru: {
       unitName: 'новемдециллион'
@@ -864,7 +855,8 @@ ranks.forEach(function (rank) {
   }
 });
 function getRankProperty(rank, locale, prop) {
-  if (rank.locales[locale] != null) {
+  var _rank$locales;
+  if (((_rank$locales = rank.locales) === null || _rank$locales === void 0 ? void 0 : _rank$locales[locale]) != null) {
     var _rank$locales$locale$;
     return (_rank$locales$locale$ = rank.locales[locale][prop]) !== null && _rank$locales$locale$ !== void 0 ? _rank$locales$locale$ : rank[prop];
   }

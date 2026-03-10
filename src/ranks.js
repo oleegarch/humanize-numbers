@@ -114,7 +114,7 @@ export const ranks = [
 	{
 		unit: 1e33,
 		unitName: 'decillion',
-		abbr: 'Dc',
+		abbr: 'De',
 		locales: {
 			ru: {
 				unitName: 'дециллион',
@@ -124,7 +124,6 @@ export const ranks = [
 	{
 		unit: 1e36,
 		unitName: 'undecillion',
-		abbr: 'Und',
 		locales: {
 			ru: {
 				unitName: 'ундециллион',
@@ -134,7 +133,6 @@ export const ranks = [
 	{
 		unit: 1e39,
 		unitName: 'duodecillion',
-		abbr: 'Dud',
 		locales: {
 			ru: {
 				unitName: 'дуодециллион',
@@ -144,7 +142,6 @@ export const ranks = [
 	{
 		unit: 1e42,
 		unitName: 'tredecillion',
-		abbr: 'Trd',
 		locales: {
 			ru: {
 				unitName: 'тредециллион',
@@ -154,7 +151,6 @@ export const ranks = [
 	{
 		unit: 1e45,
 		unitName: 'quattuordecillion',
-		abbr: 'Qud',
 		locales: {
 			ru: {
 				unitName: 'кватуордециллион',
@@ -164,7 +160,6 @@ export const ranks = [
 	{
 		unit: 1e48,
 		unitName: 'quindecillion',
-		abbr: 'Qid',
 		locales: {
 			ru: {
 				unitName: 'квиндециллион',
@@ -174,7 +169,6 @@ export const ranks = [
 	{
 		unit: 1e51,
 		unitName: 'sexdecillion',
-		abbr: 'Sed',
 		locales: {
 			ru: {
 				unitName: 'сексдециллион',
@@ -184,7 +178,6 @@ export const ranks = [
 	{
 		unit: 1e54,
 		unitName: 'septendecillion',
-		abbr: 'Spd',
 		locales: {
 			ru: {
 				unitName: 'септендециллион',
@@ -194,7 +187,6 @@ export const ranks = [
 	{
 		unit: 1e57,
 		unitName: 'octodecillion',
-		abbr: 'Ocd',
 		locales: {
 			ru: {
 				unitName: 'октодециллион',
@@ -204,7 +196,6 @@ export const ranks = [
 	{
 		unit: 1e60,
 		unitName: 'novemdecillion',
-		abbr: 'Nod',
 		locales: {
 			ru: {
 				unitName: 'новемдециллион',
@@ -955,7 +946,7 @@ ranks.forEach((rank) => {
 })
 
 export function getRankProperty(rank, locale, prop) {
-	if (rank.locales[locale] != null) {
+	if (rank.locales?.[locale] != null) {
 		return rank.locales[locale][prop] ?? rank[prop]
 	}
 	return rank[prop]

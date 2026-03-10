@@ -9,6 +9,7 @@ import {
 	fullyReadableNumber,
 	textToNumbers,
 	avoidExponentialNotation,
+	toExponentialNotation,
 	dashNumbers,
 	round,
 	floor,
@@ -20,6 +21,8 @@ import {
 	humanizeAlphabet,
 	alphabet,
 	humanizeWithFormat,
+	setGlobalHumanizeOptions,
+	createHumanizeFormat,
 } from './index.js'
 
 describe('humanizeNumber', () => {
@@ -48,15 +51,17 @@ describe('humanizeNumber', () => {
 		expect(humanizeNumberSM(11111111)).toBe('11.11M')
 		expect(humanizeNumberSM(1234567890)).toBe('1.23B')
 		expect(humanizeNumberSM(1234567890123)).toBe('1.23T')
-		expect(humanizeNumberSM(1.222e15)).toBe('1.22 Qa')
-		expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22 Qi')
-		expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22 Sx')
-		expect(humanizeNumberSM(1e303)).toBe('1 centillion')
+		expect(humanizeNumberSM(1.222e15)).toBe('1.22e15')
+		expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22e18')
+		expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22e21')
+		expect(humanizeNumberSM(1e303)).toBe('1e303')
+		expect(humanizeNumberSM(1.11e303)).toBe('1.11e303')
 
 		/*
 		 * extra small size
 		 */
-		expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx')
+		expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2e21')
+		expect(humanizeNumberXS(1.11e303)).toBe('1.1e303')
 
 		/*
 		 * other variants
@@ -98,10 +103,11 @@ describe('humanizeNumber', () => {
 		expect(humanizeNumberSM(11000000)).toBe('11 млн')
 		expect(humanizeNumberSM(1234567890)).toBe('1.23 млрд')
 		expect(humanizeNumberSM(1234567890123)).toBe('1.23 трлн')
-		expect(humanizeNumberSM(1.222e15)).toBe('1.22 Qa')
-		expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22 Qi')
-		expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22 Sx')
-		expect(humanizeNumberSM(1e303)).toBe('1 центиллион')
+		expect(humanizeNumberSM(1.222e15)).toBe('1.22e15')
+		expect(humanizeNumberSM(1.222e18 + 2)).toBe('1.22e18')
+		expect(humanizeNumberSM(1.222e21 + 2)).toBe('1.22e21')
+		expect(humanizeNumberSM(1.1e303)).toBe('1.1e303')
+		expect(humanizeNumberSM(1.11e303)).toBe('1.11e303')
 
 		/*
 		 * extra small size
@@ -112,10 +118,11 @@ describe('humanizeNumber', () => {
 		expect(humanizeNumberXS(11000000)).toBe('11М')
 		expect(humanizeNumberXS(1234567890)).toBe('1.2B')
 		expect(humanizeNumberXS(1234567890123)).toBe('1.2Т')
-		expect(humanizeNumberXS(1.222e15)).toBe('1.2 Qa')
-		expect(humanizeNumberXS(1.222e18 + 2)).toBe('1.2 Qi')
-		expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2 Sx')
-		expect(humanizeNumberXS(1e303)).toBe('1 центиллион')
+		expect(humanizeNumberXS(1.222e15)).toBe('1.2e15')
+		expect(humanizeNumberXS(1.222e18 + 2)).toBe('1.2e18')
+		expect(humanizeNumberXS(1.222e21 + 2)).toBe('1.2e21')
+		expect(humanizeNumberXS(1.1e303)).toBe('1.1e303')
+		expect(humanizeNumberXS(1.11e303)).toBe('1.1e303')
 	})
 
 	it('with options', () => {
@@ -132,17 +139,56 @@ describe('humanizeNumber', () => {
 		/* using certain fraction count: */
 		expect(humanizeNumberSM(1111111, { fractionCount: 4, locale: 'ru' })).toBe('1.1111 млн')
 
-		/* add zeros in fraction part of the number */
-		expect(humanizeNumberXS(1e9, { zeros: true })).toBe('1.0B')
-		expect(humanizeNumberXS(1e9, { fractionCount: 5, zeros: true })).toBe('1.00000B')
+		/* pad padZeros in fraction part of the number */
+		expect(humanizeNumberXS(1e9, { padZeros: true })).toBe('1.0B')
+		expect(humanizeNumberXS(1e9, { fractionCount: 5, padZeros: true })).toBe('1.00000B')
 
 		/* using certain size: */
 		expect(humanizeNumber(1e9, 'sm', { locale: 'ru' })).toBe('1 млрд')
 		expect(humanizeNumber(1e9, 'md', { locale: 'en' })).toBe('1 billion')
+
+		/* using exponential notation: */
+		expect(humanizeNumber(1e9, 'sm', { exponentialFrom: 1e9 })).toBe('1e9')
+		expect(humanizeNumber(1e9, 'md', { exponentialFrom: 1e9, exponentialOptions: { padZeros: true } })).toBe('1.00e9')
+		expect(humanizeNumber(1e9, 'md', { exponentialFrom: 1e9, exponentialOptions: { plusSign: true, padZeros: true } })).toBe('1.00e+9')
+		expect(humanizeNumber(1.1e9, 'md', { exponentialFrom: 1e9 })).toBe('1.1e9')
+		expect(humanizeNumber(1.1e9, 'md', { exponentialFrom: 1e9, exponentialOptions: { padZeros: true } })).toBe('1.10e9')
+		expect(humanizeNumber(1.1e9, 'md', { exponentialFrom: 1e9, exponentialOptions: { plusSign: true, padZeros: true } })).toBe('1.10e+9')
+
+		/* using separator: */
+		expect(humanizeNumber(1e9, 'md', { separator: '&nbsp;' })).toBe('1&nbsp;миллиард')
+
+		/* enable humanization from certain value: */
+		expect(humanizeNumber(1e9, 'md', { humanizeFrom: 1e12 })).toBe('1 000 000 000')
+		expect(humanizeNumber(1e9, 'md', { humanizeFrom: 1e12, fullyReadable: false })).toBe('1000000000')
+		expect(humanizeNumber(1e9, 'md', { humanizeFrom: 1e12, fullyReadable: true, fullyReadableSeparator: ',' })).toBe('1,000,000,000')
+		expect(humanizeNumber(1e9, 'md', { humanizeFrom: 1e9, locale: 'ru' })).toBe('1 миллиард')
+		expect(humanizeNumber(1e9, 'md', { humanizeFrom: 1e9, locale: 'en' })).toBe('1 billion')
+
+		/* using global humanize options: */
+		setGlobalHumanizeOptions('locale', 'ru')
+		expect(humanizeNumber(1e9, 'md')).toBe('1 миллиард')
+		setGlobalHumanizeOptions('locale', 'en')
+		expect(humanizeNumber(1e9, 'md')).toBe('1 billion')
+		setGlobalHumanizeOptions('exponentialFrom', 1e9)
+		expect(humanizeNumber(1e9, 'md')).toBe('1e9')
+		setGlobalHumanizeOptions('exponentialFrom', false)
+		expect(humanizeNumber(1e9, 'md')).toBe('1 billion')
+
+		/* max ranks K,M,B,T = 4: */
+		expect(humanizeNumber(1e15, 'md', { maxRanks: 4 })).toBe('1000 trillion')
+		expect(humanizeNumber(1e18, 'md', { maxRanks: 4 })).toBe('1000000 trillion')
+		expect(humanizeNumber(1e18, 'sm', { maxRanks: 4 })).toBe('1000000T')
+		expect(humanizeNumber(1.111e18, 'sm', { maxRanks: 4 })).toBe('1111000T')
+		expect(humanizeNumber(1e18, 'xs', { maxRanks: 4 })).toBe('1000000T')
+		expect(humanizeNumber(1.111e18, 'xs', { maxRanks: 4 })).toBe('1111000T')
+		expect(humanizeNumber(1.111e9, 'md', { maxRanks: 4 })).toBe('1.11 billion')
+		expect(humanizeNumber(1.111e9, 'sm', { maxRanks: 4 })).toBe('1.11B')
+		expect(humanizeNumber(1.111e9, 'xs', { maxRanks: 4 })).toBe('1.1B')
 	})
 })
 
-describe('humanizeAbbr', () => {
+describe('humanizeWithFormat', () => {
 	test('default format', () => {
 		expect(humanizeAbbr(1e3)).toBe('1K')
 		expect(humanizeAbbr(1e6)).toBe('1M')
@@ -165,14 +211,15 @@ describe('humanizeAbbr', () => {
 
 	test('alphabet format', () => {
 		for (let i = 0; i < alphabet.length; i++) {
-			let letter = alphabet[i]
+			let letter = alphabet[i].letter
 			expect(humanizeAlphabet(Math.pow(1000, i + 1))).toBe('1' + letter)
 		}
 	})
 
 	test('alphabet * 2 format', () => {
 		for (let i = alphabet.length; i < alphabet.length * 2; i++) {
-			let letter = alphabet[i % alphabet.length]
+			let letter = alphabet[i % alphabet.length].letter
+			console.log(letter, i)
 			expect(humanizeAlphabet(Math.pow(1000, i + 1))).toBe('1z' + letter)
 		}
 
@@ -180,13 +227,12 @@ describe('humanizeAbbr', () => {
 	})
 
 	test('custom format', () => {
-		let rusAlphabet = 'а,б,в,г,д,е,ё,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я'.split(
-			','
-		)
-		expect(humanizeWithFormat(1e3, { format: rusAlphabet })).toBe('1а')
-		expect(humanizeWithFormat(1e6, { format: rusAlphabet })).toBe('1б')
-		expect(humanizeWithFormat(1e9, { format: rusAlphabet })).toBe('1в')
-		expect(humanizeWithFormat(1e303, { format: rusAlphabet })).toBe('1яяяб')
+		let rusAlphabet = 'а,б,в,г,д,е,ё,ж,з,и,й,к,л,м,н,о,п,р,с,т,у,ф,х,ц,ч,ш,щ,ъ,ы,ь,э,ю,я'.split(',')
+		let rusAlphabetFormat = createHumanizeFormat(rusAlphabet)
+		expect(humanizeNumberXS(1e3, { repeatableAbbr: true, format: rusAlphabetFormat })).toBe('1а')
+		expect(humanizeNumberXS(1e6, { repeatableAbbr: true, format: rusAlphabetFormat })).toBe('1б')
+		expect(humanizeNumberXS(1e9, { repeatableAbbr: true, format: rusAlphabetFormat })).toBe('1в')
+		expect(humanizeNumberXS(1e303, { repeatableAbbr: true, format: rusAlphabetFormat })).toBe('1яяяб')
 	})
 })
 
@@ -200,6 +246,19 @@ test('avoidExponentialNotation', () => {
 	expect(avoidExponentialNotation(1e21)).toBe('1000000000000000000000')
 	expect(avoidExponentialNotation(1e60)).toBe('1000000000000000000000000000000000000000000000000000000000000')
 	expect(avoidExponentialNotation(1e300)).toBe('1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000')
+})
+test('toExponentialNotation', () => {
+	expect(toExponentialNotation(10)).toBe('1e1')
+	expect(toExponentialNotation(1e+21)).toBe('1e21')
+	expect(toExponentialNotation(1e+21, 1)).toBe('1e21')
+	expect(toExponentialNotation(1.1e+21, 1)).toBe('1.1e21')
+	expect(toExponentialNotation(1.111e+21, 3)).toBe('1.111e21')
+	expect(toExponentialNotation(1.100e+21, 3)).toBe('1.1e21')
+	expect(toExponentialNotation(1.100e+21, 3, { padZeros: true })).toBe('1.100e21')
+	expect(toExponentialNotation(1e+21, 1, { plusSign: true })).toBe('1e+21')
+	expect(toExponentialNotation(1.1e+21, 1, { plusSign: true })).toBe('1.1e+21')
+	expect(toExponentialNotation(1.111e+21, 3, { plusSign: true })).toBe('1.111e+21')
+	expect(toExponentialNotation(1.110e+21, 3, { plusSign: true, padZeros: true })).toBe('1.110e+21')
 })
 test('countUnits', () => {
 	expect(countUnits(1000)).toBe(3)

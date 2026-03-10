@@ -3,15 +3,15 @@
 	"author": "Oleg Mikhailov",
 	"type": "module",
 	"name": "humanize-numbers",
-	"version": "1.0.45",
+	"version": "1.0.46",
 	"description": "Make large numbers human readable",
 	"main": "./dist/index.cjs",
 	"module": "./dist/index.js",
 	"scripts": {
-		"test": "vitest",
+		"test": "vitest src",
 		"build": "npm run build:esm && npm run build:cjs",
-		"build:esm": "babel src --out-dir dist --extensions \".js\" --env-name esm",
-		"build:cjs": "babel src --out-dir dist --extensions \".js\" --out-file-extension .cjs --env-name cjs"
+		"build:esm": "babel src --out-dir dist --extensions \".js\" --ignore \"**/*.test.js\" --env-name esm",
+		"build:cjs": "babel src --out-dir dist --extensions \".js\" --ignore \"**/*.test.js\" --out-file-extension .cjs --env-name cjs"
 	},
 	"exports": {
 		".": {
