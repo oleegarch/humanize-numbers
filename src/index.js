@@ -274,8 +274,8 @@ export function humanizeNumber(
 		fullyReadable = true,
 		fullyReadableSeparator = ' '
 	} = {
-		...options,
-		...humanizeOptions
+		...humanizeOptions,
+		...options
 	}
 
 	const currentLocale = optionsLocale ?? locale
