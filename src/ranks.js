@@ -124,6 +124,7 @@ export const ranks = [
 	{
 		unit: 1e36,
 		unitName: 'undecillion',
+		abbr: 'Und',
 		locales: {
 			ru: {
 				unitName: 'ундециллион',
@@ -133,6 +134,7 @@ export const ranks = [
 	{
 		unit: 1e39,
 		unitName: 'duodecillion',
+		abbr: 'Duo',
 		locales: {
 			ru: {
 				unitName: 'дуодециллион',
@@ -142,6 +144,7 @@ export const ranks = [
 	{
 		unit: 1e42,
 		unitName: 'tredecillion',
+		abbr: 'Tre',
 		locales: {
 			ru: {
 				unitName: 'тредециллион',
@@ -151,6 +154,7 @@ export const ranks = [
 	{
 		unit: 1e45,
 		unitName: 'quattuordecillion',
+		abbr: 'Qua',
 		locales: {
 			ru: {
 				unitName: 'кватуордециллион',
@@ -160,6 +164,7 @@ export const ranks = [
 	{
 		unit: 1e48,
 		unitName: 'quindecillion',
+		abbr: 'Qui',
 		locales: {
 			ru: {
 				unitName: 'квиндециллион',
@@ -169,6 +174,7 @@ export const ranks = [
 	{
 		unit: 1e51,
 		unitName: 'sexdecillion',
+		abbr: 'Sex',
 		locales: {
 			ru: {
 				unitName: 'сексдециллион',
@@ -178,6 +184,7 @@ export const ranks = [
 	{
 		unit: 1e54,
 		unitName: 'septendecillion',
+		abbr: 'Sep',
 		locales: {
 			ru: {
 				unitName: 'септендециллион',
@@ -187,6 +194,7 @@ export const ranks = [
 	{
 		unit: 1e57,
 		unitName: 'octodecillion',
+		abbr: 'Oct',
 		locales: {
 			ru: {
 				unitName: 'октодециллион',
@@ -196,6 +204,7 @@ export const ranks = [
 	{
 		unit: 1e60,
 		unitName: 'novemdecillion',
+		abbr: 'Nov',
 		locales: {
 			ru: {
 				unitName: 'новемдециллион',
@@ -215,6 +224,7 @@ export const ranks = [
 	{
 		unit: 1e66,
 		unitName: 'unvigintillion',
+		abbr: 'Unv',
 		locales: {
 			ru: {
 				unitName: 'унвигинтиллион',
@@ -224,6 +234,7 @@ export const ranks = [
 	{
 		unit: 1e69,
 		unitName: 'duovigintillion',
+		abbr: 'Duov',
 		locales: {
 			ru: {
 				unitName: 'дуовигинтиллион',
@@ -233,6 +244,7 @@ export const ranks = [
 	{
 		unit: 1e72,
 		unitName: 'trevigintillion',
+		abbr: 'Trev',
 		locales: {
 			ru: {
 				unitName: 'тревигинтиллион',
@@ -242,6 +254,7 @@ export const ranks = [
 	{
 		unit: 1e75,
 		unitName: 'quattuorvigintillion',
+		abbr: 'Quat',
 		locales: {
 			ru: {
 				unitName: 'кватуорвигинтиллион',
@@ -251,6 +264,7 @@ export const ranks = [
 	{
 		unit: 1e78,
 		unitName: 'quinvigintillion',
+		abbr: 'Quin',
 		locales: {
 			ru: {
 				unitName: 'квинвигинтиллион',

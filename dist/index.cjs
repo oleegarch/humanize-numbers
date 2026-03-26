@@ -509,6 +509,9 @@ var numbersRegexp = /(-?(?:\d+(?:\.\d+)?(?:e[+\-]?\d+)?))((?:\s+)?[ёа-яa-z]+)
 var removeNonLettersSymbols = function removeNonLettersSymbols(t) {
   return t.replace(/[\.,:;\(\)]/g, '');
 };
+var normalizeFloatError = function normalizeFloatError(num) {
+  return Number(num.toPrecision(15));
+};
 function textToNumbers(text) {
   var _options$locale;
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -525,7 +528,7 @@ function textToNumbers(text) {
       if (rank) {
         var _getUnitLabelAbbrCoun;
         var abbrCount = (_getUnitLabelAbbrCoun = getUnitLabelAbbrCount(unitLabel, rank)) !== null && _getUnitLabelAbbrCoun !== void 0 ? _getUnitLabelAbbrCoun : 1;
-        numbers.push(num * Math.pow(rank.unit, abbrCount));
+        numbers.push(normalizeFloatError(num * Math.pow(rank.unit, abbrCount)));
       }
     }
     if (rank == null) {
@@ -571,7 +574,8 @@ function isTextMeansThisRank(text, rank, locale) {
   return new RegExp(regexpStr, 'i').test(text);
 }
 function getUnitLabelAbbrCount(text, rank) {
-  if (rank.abbr.length === 1 && text.split('').every(function (_char) {
+  var _rank$abbr;
+  if (((_rank$abbr = rank.abbr) === null || _rank$abbr === void 0 ? void 0 : _rank$abbr.length) === 1 && text.split('').every(function (_char) {
     return _char === rank.abbr.toLowerCase();
   })) {
     return text.split('').length;

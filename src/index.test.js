@@ -322,6 +322,8 @@ describe('textToNumbers', () => {
 		expect(textToNumbers('1.22 квадриллиона')).toEqual({ numbers: [1.22e15], textWithoutNumbers: '' })
 		expect(textToNumbers('1.22 квинтиллионов')).toEqual({ numbers: [1.22e18], textWithoutNumbers: '' })
 		expect(textToNumbers('1.22 секстиллионов')).toEqual({ numbers: [1.22e21], textWithoutNumbers: '' })
+		expect(textToNumbers('1.22 дуодециллионов')).toEqual({ numbers: [1.22e39], textWithoutNumbers: '' })
+		expect(textToNumbers('1.22 центиллион')).toEqual({ numbers: [1.22e303], textWithoutNumbers: '' })
 		expect(textToNumbers('666e+6')).toEqual({ numbers: [666000000], textWithoutNumbers: '' })
 		expect(textToNumbers('1e+21')).toEqual({ numbers: [1e+21], textWithoutNumbers: '' })
 		expect(textToNumbers('1.001e21')).toEqual({ numbers: [1.001e+21], textWithoutNumbers: '' })

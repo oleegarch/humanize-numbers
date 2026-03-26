@@ -448,6 +448,7 @@ export function humanizeAlphabet(num, options = {}) {
  */
 const numbersRegexp = /(-?(?:\d+(?:\.\d+)?(?:e[+\-]?\d+)?))((?:\s+)?[ёа-яa-z]+)?/gi
 const removeNonLettersSymbols = (t) => t.replace(/[\.,:;\(\)]/g, '')
+const normalizeFloatError = (num) => Number(num.toPrecision(15))
 
 export function textToNumbers(text, options = {}) {
 	const numbers = []
@@ -463,7 +464,7 @@ export function textToNumbers(text, options = {}) {
 
 			if (rank) {
 				const abbrCount = getUnitLabelAbbrCount(unitLabel, rank) ?? 1
-				numbers.push(num * rank.unit ** abbrCount)
+				numbers.push(normalizeFloatError(num * rank.unit ** abbrCount))
 			}
 		}
 
@@ -514,7 +515,7 @@ export function isTextMeansThisRank(text, rank, locale) {
 	return new RegExp(regexpStr, 'i').test(text)
 }
 function getUnitLabelAbbrCount(text, rank) {
-	if (rank.abbr.length === 1 && text.split('').every((char) => char === rank.abbr.toLowerCase())) {
+	if (rank.abbr?.length === 1 && text.split('').every((char) => char === rank.abbr.toLowerCase())) {
 		return text.split('').length
 	}
 	return null
