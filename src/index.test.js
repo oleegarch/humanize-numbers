@@ -219,7 +219,6 @@ describe('humanizeWithFormat', () => {
 	test('alphabet * 2 format', () => {
 		for (let i = alphabet.length; i < alphabet.length * 2; i++) {
 			let letter = alphabet[i % alphabet.length].letter
-			console.log(letter, i)
 			expect(humanizeAlphabet(Math.pow(1000, i + 1))).toBe('1z' + letter)
 		}
 
